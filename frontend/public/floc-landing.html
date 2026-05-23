@@ -294,26 +294,6 @@
     }
 
     /* ════════════════════════════════════════════
-       TICKER
-    ════════════════════════════════════════════ */
-    .ticker {
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      overflow: hidden; padding: 14px 0; background: transparent;
-    }
-    .ticker-track {
-      display: flex; gap: 0;
-      animation: ticker 26s linear infinite; white-space: nowrap;
-    }
-    .ticker-item {
-      display: flex; align-items: center; gap: 40px; padding-right: 64px;
-      font-family: var(--fb); font-size: 12px; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--white);
-    }
-    .ticker-item.bright { color: var(--white); }
-    .tdot { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-
-    /* ════════════════════════════════════════════
        SERVICES ROW — directly from wearefloc.com
     ════════════════════════════════════════════ */
     .svcs {
@@ -360,13 +340,13 @@
     ════════════════════════════════════════════ */
     #diagnosis { background: transparent; border-top: 1px solid var(--border); }
     .diag-head {
-      max-width: 700px; margin-bottom: 72px;
-      font-family: var(--fd); font-size: clamp(18px, 2.4vw, 32px);
-      font-weight: 500; line-height: 1.3; text-transform: uppercase;
+      max-width: min(100%, 980px); margin-bottom: 72px;
+      font-family: var(--fd); font-size: clamp(34px, 4.2vw, 60px);
+      font-weight: 800; line-height: .95; text-transform: uppercase;
       color: var(--white);
     }
     .stack-line { display: block; }
-    .diag-head .line { display: block; white-space: nowrap; }
+    .diag-head .line { display: block; }
     .diag-head strong { color: var(--white); }
     .diag-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
     .diag-card {
@@ -557,7 +537,6 @@
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:.3} }
-    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
     .reveal {
       opacity: 0; transform: translateY(24px);
@@ -606,10 +585,6 @@
     }
 
     @media (min-width: 961px) {
-      .ticker {
-        margin-left: 48px;
-        margin-right: calc(var(--sidebar) + var(--side-gap) + 48px);
-      }
       body > section,
       body > .svcs,
       body > footer {
@@ -687,60 +662,6 @@
 
   </section>
 
-  <!-- ════ TICKER ══════════════════════════════ -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <div class="ticker-item bright">
-        <div class="tdot"></div>Posicionamiento
-        <div class="tdot"></div>Relato
-        <div class="tdot"></div>Landing
-        <div class="tdot"></div>Deck
-      </div>
-      <div class="ticker-item">
-        <div class="tdot"></div>Narrativa de lanzamiento
-        <div class="tdot"></div>Estrategia · Señal
-        <div class="tdot"></div>Señal para inversores
-        <div class="tdot"></div>Sistema de campaña
-        <div class="tdot"></div>FLOC* GTM
-        <div class="tdot"></div>wearefloc.com
-      </div>
-      <div class="ticker-item bright" aria-hidden="true">
-        <div class="tdot"></div>Posicionamiento
-        <div class="tdot"></div>Relato
-        <div class="tdot"></div>Landing
-        <div class="tdot"></div>Deck
-      </div>
-      <div class="ticker-item" aria-hidden="true">
-        <div class="tdot"></div>Narrativa de lanzamiento
-        <div class="tdot"></div>Estrategia · Señal
-        <div class="tdot"></div>Señal para inversores
-        <div class="tdot"></div>Sistema de campaña
-        <div class="tdot"></div>FLOC* GTM
-        <div class="tdot"></div>wearefloc.com
-      </div>
-    </div>
-  </div>
-
-  <!-- ════ SERVICES ════════════════════════════ -->
-  <div class="svcs reveal">
-    <div class="svc">
-      <div class="svc-name">Posicionamiento</div>
-      <div class="svc-tags">Narrativa / audiencia / oferta / categoría / prueba</div>
-    </div>
-    <div class="svc">
-      <div class="svc-name">Relato</div>
-      <div class="svc-tags">Mensaje founder / estructura del deck / claims / objeciones</div>
-    </div>
-    <div class="svc">
-      <div class="svc-name">Landing</div>
-      <div class="svc-tags">Página de conversión / sistema visual / jerarquía copy / handoff</div>
-    </div>
-    <div class="svc">
-      <div class="svc-name">Assets</div>
-      <div class="svc-tags">Deck inversores / piezas social / módulos de campaña / motion</div>
-    </div>
-  </div>
-
   <!-- ════ DIAGNOSIS ════════════════════════════ -->
   <section id="diagnosis" class="sec">
     <div class="lbl">Por qué existe</div>
@@ -769,6 +690,27 @@
       </div>
     </div>
   </section>
+
+  <!-- ════ SERVICES ════════════════════════════ -->
+  <div class="svcs reveal">
+    <div class="svc">
+      <div class="svc-name">Posicionamiento</div>
+      <div class="svc-tags">Narrativa / audiencia / oferta / categoría / prueba</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Relato</div>
+      <div class="svc-tags">Mensaje founder / estructura del deck / claims / objeciones</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Landing</div>
+      <div class="svc-tags">Página de conversión / sistema visual / jerarquía copy / handoff</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Assets</div>
+      <div class="svc-tags">Deck inversores / piezas social / módulos de campaña / motion</div>
+    </div>
+  </div>
+
 
   <!-- ════ FILTER ═══════════════════════════════ -->
   <section id="filter" class="sec">
