@@ -450,10 +450,11 @@
     }
     .cta-h {
       font-family: var(--fd); font-weight: 800;
-      font-size: clamp(32px, 8vw, 100px);
-      line-height: .88; text-transform: uppercase; letter-spacing: -.01em;
-      max-width: 900px; margin-bottom: 52px;
+      font-size: clamp(12px, 1.2vw, 90px);
+      line-height: .94; text-transform: uppercase; letter-spacing: -.01em;
+      width: fit-content; max-width: 560px; margin-bottom: 44px;
     }
+    .cta-h .stack-line { white-space: nowrap; }
     .cta-promise {
       max-width: 620px; margin-bottom: 52px;
       font-family: var(--fd); font-size: clamp(16px, 2vw, 24px);
@@ -500,20 +501,6 @@
        FOOTER — exact structure of wearefloc.com
     ════════════════════════════════════════════ */
     footer { border-top: 1px solid var(--border); background: rgba(0,0,0,.72); }
-    .foot-status {
-      padding: 40px 48px 0;
-      display: flex; gap: 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .foot-word {
-      padding: 10px 28px; border-right: 1px solid var(--border);
-      font-family: var(--fd); font-size: 13px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .06em; color: var(--dim);
-    }
-    .foot-word:first-child { padding-left: 0; }
-    .foot-word.active { color: var(--white); }
-    .foot-word .lime { color: var(--rgb-green); }
-
     .foot-main {
       padding: 40px 48px 32px;
       display: flex; justify-content: space-between; align-items: flex-start;
@@ -588,7 +575,6 @@
       .system-grid, .fg { grid-template-columns: 1fr; gap: 24px; }
       .foot-main { flex-direction: column; }
       .foot-socials { align-items: flex-start; }
-      .foot-status { flex-wrap: wrap; }
     }
     @media (max-width: 600px) {
       .svcs, .diag-grid { grid-template-columns: 1fr; }
@@ -617,6 +603,9 @@
         max-width: none;
         margin-left: 48px;
         margin-right: calc(var(--sidebar) + var(--side-gap) + 48px);
+      }
+      body > footer {
+        margin-right: 48px;
       }
     }
   </style>
@@ -877,19 +866,6 @@
 
   <!-- ════ FOOTER ════════════════════════════════ -->
   <footer>
-    <!-- Status words — from wearefloc.com -->
-    <div class="foot-status">
-      <div class="foot-word active">estrategia</div>
-      <div class="foot-word active">branding</div>
-      <div class="foot-word active">producto</div>
-      <div class="foot-word active">Motion</div>
-      <div class="foot-word">siempre</div>
-      <div class="foot-word">en</div>
-      <div class="foot-word"><span class="lime">ONLINe</span></div>
-      <div class="foot-word"><span class="lime">Onchain</span></div>
-      <div class="foot-word"><span class="lime">Onward</span></div>
-    </div>
-
     <div class="foot-main">
       <div class="foot-brand">
         <div class="foot-logo">FLOC<span class="star">*</span></div>
