@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GTM BY FLOC* — Go-to-market para marcas en evolución</title>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <style>
     @font-face {
       font-family: 'Druk Wide';
@@ -89,37 +90,63 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 600;
       padding: 0 48px; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center;
+      gap: 40px;
       border-bottom: 1px solid transparent;
       transition: background .35s, border-color .35s;
     }
+    .nav-links-actions { margin-left: auto; }
     nav.scrolled {
       background: rgba(0,0,0,.88);
       backdrop-filter: blur(20px);
       border-color: var(--border);
     }
     .nav-logo {
-      font-family: var(--fd); font-weight: 800; font-size: 13px;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--white); text-decoration: none;
+      display: inline-flex; align-items: center;
+      text-decoration: none; line-height: 0;
+      color: var(--white);
     }
-    .nav-logo .star { color: var(--accent); }
+    .nav-logo svg { display: block; height: 22px; width: auto; }
     .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
     .nav-links a {
-      font-family: var(--fm); font-size: 10px; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--dim); text-decoration: none;
+      font-family: var(--fb); font-size: 14px; letter-spacing: 0;
+      color: var(--dim); text-decoration: none;
       transition: color .2s;
     }
     .nav-links a:hover { color: var(--white); }
     .nav-cta {
-      font-family: var(--fm); font-size: 10px; letter-spacing: .18em;
-      text-transform: uppercase; background: transparent;
-      color: var(--white) !important;
+      font-family: var(--fm) !important; font-size: 12px !important; letter-spacing: 0 !important;
+      text-transform: uppercase; background: #00ff00;
+      color: #000000 !important;
       padding: 10px 24px; text-decoration: none;
-      border: 1px solid var(--accent);
+      border: 1px solid #00ff00;
       transition: background .2s, color .2s, border-color .2s;
     }
-    .nav-cta:hover { background: var(--accent); color: var(--bg) !important; }
+    .nav-cta:hover { background: #00FF00; border-color: #00FF00; color: #000000 !important; }
+
+    .nav-availability {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 14px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.02);
+      font-family: var(--fb); font-size: 14px; letter-spacing: 0;
+      color: var(--white);
+      pointer-events: none;
+    }
+    .nav-availability .label .date { opacity: 0.5; }
+    .nav-links li:has(.nav-cta) { margin-left: -24px; }
+    .nav-availability .slots { display: inline-flex; gap: 4px; }
+    .nav-availability .slot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,.18);
+    }
+    .nav-availability .slot.on { background: #00FF00; box-shadow: 0 0 6px rgba(0,255,0,.55); }
+    .nav-availability .label { white-space: nowrap; }
+    .nav-availability .label .count { color: #FFFFFF; font-weight: 600; }
+    @media (max-width: 600px) {
+      .nav-availability .label { display: none; }
+      .nav-availability { padding: 8px 10px; }
+    }
 
     /* ════════════════════════════════════════════
        HERO — copy left / vertical video right
@@ -245,18 +272,19 @@
     }
     .video-audio-toggle {
       position: absolute; right: 16px; bottom: 16px; z-index: 4;
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 14px;
-      border: 1px solid var(--accent);
-      background: rgba(0,0,0,.55);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; padding: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 99px;
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: var(--white);
-      font-family: var(--fm);
-      font-size: 9px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
       cursor: none;
       pointer-events: auto;
+      transition: border-color .2s, background .2s;
     }
+    .video-audio-toggle i { font-size: 18px; line-height: 1; }
     .video-audio-toggle:hover { border-color: var(--rgb-green); }
 
     .video-meta {
@@ -592,6 +620,59 @@
       }
     }
 
+    /* ════════════════════════════════════════════
+       BOOKING MODAL
+    ════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 32px 16px;
+      opacity: 0; transition: opacity .35s var(--ease);
+    }
+    .modal-overlay.open { display: flex; opacity: 1; }
+    .modal-dialog {
+      position: relative;
+      width: 100%; max-width: 1180px;
+      max-height: calc(100vh - 64px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+      display: flex; flex-direction: column;
+      transform: translateY(16px); opacity: 0;
+      transition: opacity .35s var(--ease), transform .45s var(--ease);
+      overflow: hidden;
+    }
+    .modal-overlay.open .modal-dialog { transform: translateY(0); opacity: 1; }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; z-index: 2;
+      background: rgba(0,0,0,.55); border: 1px solid var(--border);
+      width: 32px; height: 32px;
+      color: var(--white); font-family: var(--fm); font-size: 14px;
+      cursor: none; transition: background .2s, border-color .2s, color .2s;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .modal-close:hover {
+      background: var(--accent); border-color: var(--accent); color: var(--bg);
+    }
+    .modal-body {
+      flex: 1; overflow: auto;
+      background: var(--surface);
+    }
+    .modal-body iframe {
+      display: block; width: 100%;
+      min-height: min(820px, calc(100vh - 80px));
+      border: none;
+      background: var(--surface);
+    }
+    body.modal-open { overflow: hidden; }
+    @media (max-width: 600px) {
+      .modal-overlay { padding: 12px; }
+      .modal-body iframe { min-height: calc(100vh - 32px); }
+    }
+
     @media (min-width: 961px) {
       .ticker {
         margin-left: 48px;
@@ -617,12 +698,36 @@
 
   <!-- ════ NAV ════════════════════════════════ -->
   <nav id="nav">
-    <a href="#" class="nav-logo">GTM BY FLOC<span class="star">*</span></a>
-    <ul class="nav-links">
+    <a href="#" class="nav-logo" aria-label="GTM by FLOC*">
+      <svg viewBox="0 0 961 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M132.742 209.132H126.362C24.291 209.132 0 159.078 0 117.121V109.76C0 63.3861 27.9714 19.2207 140.348 19.2207H148.199C277.506 19.2207 289.774 65.1036 289.774 91.6029V91.8482H194.573C193.346 87.1863 187.212 74.4274 146.727 74.4274C110.413 74.4274 95.937 89.8853 95.937 111.968V114.176C95.937 136.995 109.677 155.152 145.991 155.152C182.305 155.152 192.119 143.865 192.119 138.958H142.801V101.663H291.001V205.451H228.433C226.716 200.299 222.054 190.975 217.392 186.313C211.503 191.711 189.911 209.132 132.742 209.132Z" fill="currentColor"/>
+        <path d="M375.91 205.452V85.7144H297.148V22.9014H547.91V85.7144H469.148V205.452H375.91Z" fill="currentColor"/>
+        <path d="M560.307 205.452V22.9014H683.234L726.172 104.117L770.828 22.9014H887.867V205.452H795.119V115.158L746.047 205.452H701.636L652.809 115.158V205.452H560.307Z" fill="currentColor"/>
+        <path d="M907.136 16.2485L898.583 22.4625L901.851 32.5156H929.531L907.136 16.2485Z" fill="currentColor"/>
+        <path d="M907.139 48.7836L910.406 58.8367H920.98L929.534 32.5165L907.139 48.7836Z" fill="currentColor"/>
+        <path d="M929.532 32.5165L938.087 58.8367H948.66L951.927 48.7836L929.532 32.5165Z" fill="currentColor"/>
+        <path d="M951.927 16.2485L929.532 32.5165L957.213 32.5156L960.48 22.4625L951.927 16.2485Z" fill="currentColor"/>
+        <path d="M929.518 0L920.964 6.21403L929.518 32.5342L938.073 6.21403L929.518 0Z" fill="currentColor"/>
+      </svg>
+    </a>
+    <ul class="nav-links nav-links-primary">
+      <li><a href="#diagnosis">Qué es</a></li>
+      <li><a href="#system">El Método</a></li>
       <li><a href="https://wearefloc.com/work" target="_blank">Proyectos</a></li>
-      <li><a href="#diagnosis">Por qué</a></li>
-      <li><a href="#system">Método</a></li>
-      <li><a href="#cta" class="nav-cta">Agenda una llamada</a></li>
+    </ul>
+    <ul class="nav-links nav-links-actions">
+      <li>
+        <span class="nav-availability" id="navAvailability" role="status" aria-label="Reservas disponibles">
+          <span class="slots" aria-hidden="true">
+            <span class="slot on"></span>
+            <span class="slot on"></span>
+            <span class="slot on"></span>
+            <span class="slot"></span>
+          </span>
+          <span class="label"><span class="count">1</span> reserva disponible en <span class="date"><span data-availability-month>Mayo</span> <span data-availability-year>2026</span></span></span>
+        </span>
+      </li>
+      <li><a href="#cta" class="nav-cta">Agenda ya</a></li>
     </ul>
   </nav>
 
@@ -656,21 +761,13 @@
 
     <!-- RIGHT: Video -->
     <div class="hero-right">
-      <div class="video-meta">
-        <span class="video-meta-label">GTM BY FLOC*</span>
-        <div class="spots-pill">
-          <div class="pulse-dot"></div>
-          3 plazas · Mayo 2026
-        </div>
-      </div>
-
       <div class="video-wrap">
         <div class="video-frame">
           <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
             <source src="./hero-campaign.mp4" type="video/mp4">
           </video>
           <div class="video-scanlines"></div>
-          <button class="video-audio-toggle" id="videoAudioToggle" type="button" aria-pressed="false">Con sonido</button>
+          <button class="video-audio-toggle" id="videoAudioToggle" type="button" aria-pressed="false" aria-label="Activar sonido"><i class="ph ph-speaker-simple-high" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
@@ -893,6 +990,24 @@
     </div>
   </footer>
 
+  <!-- ════ BOOKING MODAL ══════════════════════ -->
+  <div id="bookingModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+
+      <div class="modal-body">
+        <iframe
+          src=""
+          data-src="https://api.leadconnectorhq.com/widget/booking/EFOOmskKFRG1z1pU66VF"
+          style="width: 100%;border:none;overflow: hidden;"
+          scrolling="no"
+          id="EFOOmskKFRG1z1pU66VF_1779557718745"
+          title="Agenda una llamada"></iframe>
+      </div>
+    </div>
+  </div>
+  <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+
   <script>
     /* ── Cursor ──────────────────────────── */
     const dot  = document.getElementById('c-dot');
@@ -924,6 +1039,7 @@
     const heroVideo = document.querySelector('.hero-video');
     const videoAudioToggle = document.getElementById('videoAudioToggle');
     if (heroVideo && videoAudioToggle) {
+      const audioIcon = videoAudioToggle.querySelector('i');
       heroVideo.controls = false;
       videoAudioToggle.addEventListener('click', async () => {
         const shouldUnmute = heroVideo.muted;
@@ -934,8 +1050,9 @@
           heroVideo.volume = 1;
           heroVideo.controls = true;
           heroVideo.setAttribute('controls', '');
-          videoAudioToggle.textContent = 'Sin sonido';
+          if (audioIcon) audioIcon.className = 'ph ph-speaker-simple-x';
           videoAudioToggle.setAttribute('aria-pressed', 'true');
+          videoAudioToggle.setAttribute('aria-label', 'Silenciar');
         } else {
           heroVideo.muted = true;
           heroVideo.defaultMuted = true;
@@ -943,8 +1060,9 @@
           heroVideo.volume = 0;
           heroVideo.controls = false;
           heroVideo.removeAttribute('controls');
-          videoAudioToggle.textContent = 'Con sonido';
+          if (audioIcon) audioIcon.className = 'ph ph-speaker-simple-high';
           videoAudioToggle.setAttribute('aria-pressed', 'false');
+          videoAudioToggle.setAttribute('aria-label', 'Activar sonido');
         }
         try {
           heroVideo.load();
@@ -960,6 +1078,50 @@
       if (!val.includes('@')) return;
       this.style.display = 'none';
       document.getElementById('formSent').classList.add('show');
+    });
+
+    /* ── Availability label (mes dinámico) ─ */
+    (function () {
+      const now = new Date();
+      const month = now.toLocaleDateString('es-ES', { month: 'long' });
+      const capitalized = month.charAt(0).toUpperCase() + month.slice(1);
+      document.querySelectorAll('[data-availability-month]').forEach(el => { el.textContent = capitalized; });
+      document.querySelectorAll('[data-availability-year]').forEach(el => { el.textContent = now.getFullYear(); });
+    })();
+
+    /* ── Booking modal ──────────────────── */
+    const bookingModal = document.getElementById('bookingModal');
+    const bookingIframe = document.getElementById('EFOOmskKFRG1z1pU66VF_1779557718745');
+    const BOOKING_SRC = 'https://api.leadconnectorhq.com/widget/booking/EFOOmskKFRG1z1pU66VF';
+
+    function openBookingModal() {
+      if (bookingIframe && !bookingIframe.getAttribute('src')) {
+        bookingIframe.setAttribute('src', BOOKING_SRC);
+      }
+      bookingModal.classList.add('open');
+      bookingModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+    function closeBookingModal() {
+      bookingModal.classList.remove('open');
+      bookingModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('a[href="#cta"]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        openBookingModal();
+      });
+    });
+    document.querySelectorAll('[data-close-modal]').forEach(el => {
+      el.addEventListener('click', closeBookingModal);
+    });
+    bookingModal.addEventListener('click', e => {
+      if (e.target === bookingModal) closeBookingModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && bookingModal.classList.contains('open')) closeBookingModal();
     });
   </script>
 </body>
