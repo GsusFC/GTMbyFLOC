@@ -261,6 +261,7 @@
       line-height: 1.6;
       color: var(--dim);
     }
+    .hero-video-prompt-text .stack-line { display: block; }
     .video-play-button {
       flex: 0 0 auto;
       display: inline-flex;
@@ -1138,8 +1139,11 @@
       </p>
 
       <div class="hero-video-prompt">
-        <p class="hero-video-prompt-text">Dale al play: en el video te explicamos cómo convertimos claridad en mercado.</p>
         <button class="video-play-button" type="button" data-video-toggle aria-label="Reproducir video"><i class="ph ph-play" aria-hidden="true"></i></button>
+        <p class="hero-video-prompt-text">
+          <span class="stack-line">Dale al play: en el video te explicamos</span>
+          <span class="stack-line">cómo convertimos claridad en mercado.</span>
+        </p>
       </div>
 
       <div class="hero-actions">
@@ -1151,7 +1155,7 @@
     <div class="hero-right">
       <div class="video-wrap">
         <div class="video-frame">
-          <video class="hero-video" muted loop playsinline preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
+          <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
             <source src="./hero-campaign-optimized.mp4" type="video/mp4">
           </video>
           <div class="video-scanlines"></div>
@@ -1429,6 +1433,7 @@
     const videoToggleButtons = document.querySelectorAll('[data-video-toggle]');
     if (heroVideo && videoToggleButtons.length) {
       heroVideo.controls = false;
+      heroVideo.loop = true;
       let videoActivated = false;
 
       function syncVideoToggleState() {
@@ -1442,7 +1447,14 @@
       }
 
       async function playHeroVideo() {
+        const isFirstActivation = !videoActivated;
         videoActivated = true;
+        if (isFirstActivation) {
+          heroVideo.pause();
+          heroVideo.currentTime = 0;
+          heroVideo.loop = false;
+          heroVideo.removeAttribute('loop');
+        }
         heroVideo.muted = false;
         heroVideo.defaultMuted = false;
         heroVideo.removeAttribute('muted');
