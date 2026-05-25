@@ -1155,7 +1155,7 @@
     <div class="hero-right">
       <div class="video-wrap">
         <div class="video-frame">
-          <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
+          <video class="hero-video" autoplay muted loop playsinline controls preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
             <source src="./hero-campaign-optimized.mp4" type="video/mp4">
           </video>
           <div class="video-scanlines"></div>
@@ -1432,7 +1432,8 @@
     const heroVideo = document.querySelector('.hero-video');
     const videoToggleButtons = document.querySelectorAll('[data-video-toggle]');
     if (heroVideo && videoToggleButtons.length) {
-      heroVideo.controls = false;
+      heroVideo.controls = true;
+      heroVideo.setAttribute('controls', '');
       heroVideo.loop = true;
       let videoActivated = false;
 
