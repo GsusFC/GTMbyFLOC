@@ -417,14 +417,47 @@
     ════════════════════════════════════════════ */
     #diagnosis { background: transparent; border-top: 1px solid var(--border); }
     .diag-head {
-      max-width: min(100%, 860px); margin-bottom: 56px;
-      font-family: var(--fd); font-size: clamp(34px, 4.2vw, 60px);
-      font-weight: 800; line-height: 1.02; text-transform: uppercase;
+      max-width: min(100%, 920px); margin-bottom: 0;
+      color: var(--white);
+    }
+    .diag-head h2 {
+      max-width: 860px;
+      font-family: var(--fd);
+      font-size: clamp(28px, 3.8vw, 54px);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .diag-head p {
+      max-width: 920px;
+      margin-top: 22px;
+      font-size: clamp(17px, 1.35vw, 21px);
+      line-height: 1.55;
+      color: var(--dim);
+    }
+    .diag-break {
+      margin: 56px 0 28px;
+      max-width: 760px;
+    }
+    .diag-break-kicker {
+      font-family: var(--fm);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--rgb-red);
+      margin-bottom: 14px;
+    }
+    .diag-break h3 {
+      font-family: var(--fb);
+      font-size: clamp(24px, 2.2vw, 32px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: 0;
+      text-transform: none;
       color: var(--white);
     }
     .stack-line { display: block; }
-    .diag-head .line { display: block; }
-    .diag-head .line:nth-child(2n+3) { margin-top: .22em; }
     .diag-head strong { color: var(--white); }
     .diag-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
     .diag-card {
@@ -868,7 +901,6 @@
       .hero-sub { width: 100%; max-width: min(100%, 320px); }
       .hero-video-prompt { align-items: flex-start; max-width: min(100%, 320px); }
       .hero-actions { gap: 18px; }
-      .diag-head .line { white-space: normal; }
       .projects-slider { grid-auto-columns: minmax(260px, 82vw); }
       .project-slider-controls { justify-content: flex-start; }
       .project-lightbox {
@@ -1167,38 +1199,38 @@
 
   <!-- ════ DIAGNOSIS ════════════════════════════ -->
   <section id="diagnosis" class="sec">
-    <div class="lbl">Por qué existe</div>
-
     <div class="diag-head reveal">
-      <span class="line">Hay producto.</span>
-      <span class="line">Hay visión.</span>
-      <span class="line">Falta la señal</span>
-      <span class="line">que lo traduce.</span>
-      <span class="line">Y el tiempo</span>
-      <span class="line">no espera.</span>
+      <h2>Tienes la idea. Tienes el equipo. Es el momento.</h2>
+      <p>Necesitas que el mercado lo sepa antes de que la oportunidad pase.</p>
+      <p>Cada vez que explicas qué haces, la historia cambia un poco. El deck cuenta una versión. La web, otra. El pitch, otra. Y quien te escucha lo nota aunque no lo diga.</p>
+    </div>
+
+    <div class="section-cta reveal d1">
+      <a href="#cta" class="btn-main">Agenda llamada</a>
+      <span class="section-cta-note">Si hay encaje, lo decimos en 24h.</span>
+    </div>
+
+    <div class="diag-break reveal d2">
+      <div class="diag-break-kicker">Lo que frena</div>
+      <h3>Tienes todo. Pero no se entiende.</h3>
     </div>
 
     <div class="diag-grid">
       <div class="diag-card reveal d1">
         <div class="diag-num">01</div>
-        <div class="diag-title"><span class="stack-line">Producto fuerte,</span><span class="stack-line">señal débil</span></div>
-        <div class="diag-body">El mercado no te da tiempo para explicarte. O capta en segundos o sigue scrolleando. El problema no es el producto — es la capa que lo traduce.</div>
+        <div class="diag-title"><span class="stack-line">Lo tienes,</span><span class="stack-line">pero no se ve</span></div>
+        <div class="diag-body">Tienes producto, tracción y conversaciones — pero cuando lo explicas, la gente no conecta. La oportunidad pasa antes de que termines de hablar.</div>
       </div>
       <div class="diag-card reveal d2">
         <div class="diag-num">02</div>
-        <div class="diag-title"><span class="stack-line">Presión de salida,</span><span class="stack-line">relato borroso</span></div>
-        <div class="diag-body">Ronda, lanzamiento, pitch. Cada pieza habla un idioma distinto. Eso se nota. Los inversores lo notan. El mercado lo nota.</div>
+        <div class="diag-title"><span class="stack-line">Todo dice</span><span class="stack-line">cosas distintas</span></div>
+        <div class="diag-body">Tu presentación, tu web y tu pitch cuentan historias diferentes. Quien te evalúa lo nota antes que tú.</div>
       </div>
       <div class="diag-card reveal d3">
         <div class="diag-num">03</div>
-        <div class="diag-title"><span class="stack-line">Diseño pulido,</span><span class="stack-line">sin ruta de conversión</span></div>
-        <div class="diag-body">Una landing bonita que no convierte es un gasto, no un activo. La diferencia está en si la estrategia vino antes o después del Figma.</div>
+        <div class="diag-title"><span class="stack-line">Listo por dentro,</span><span class="stack-line">invisible por fuera</span></div>
+        <div class="diag-body">Tienes el momento, el equipo y el producto. Pero lo que el mercado ve no refleja dónde estás realmente.</div>
       </div>
-    </div>
-
-    <div class="section-cta reveal d4">
-      <a href="#cta" class="btn-main">Agendar diagnóstico</a>
-      <span class="section-cta-note">Una llamada para ver si el momento y el reto encajan.</span>
     </div>
   </section>
 
