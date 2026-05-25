@@ -139,13 +139,18 @@
     }
     .nav-cta {
       font-family: var(--fm) !important; font-size: 12px !important; letter-spacing: 0 !important;
-      text-transform: uppercase; background: #00ff00;
+      text-transform: uppercase; background: var(--rgb-green);
       color: #000000 !important;
       padding: 10px 24px; text-decoration: none;
-      border: 1px solid #00ff00;
+      border: 1px solid var(--rgb-green);
       transition: background .2s, color .2s, border-color .2s;
     }
-    .nav-cta:hover { background: #00FF00; border-color: #00FF00; color: #000000 !important; }
+    .nav-cta:hover,
+    .nav-cta:focus-visible {
+      background: var(--rgb-blue);
+      border-color: var(--rgb-blue);
+      color: var(--bg) !important;
+    }
 
     .nav-availability {
       display: inline-flex; align-items: center; gap: 10px;
@@ -249,11 +254,16 @@
     }
     .btn-main {
       font-family: var(--fm); font-size: 13px; letter-spacing: .14em;
-      text-transform: uppercase; background: var(--accent); color: var(--bg);
-      padding: 18px 34px; text-decoration: none; border: 1px solid var(--accent);
+      text-transform: uppercase; background: var(--rgb-green); color: var(--bg);
+      padding: 18px 34px; text-decoration: none; border: 1px solid var(--rgb-green);
       transition: background .2s, color .2s, border-color .2s;
     }
-    .btn-main:hover { background: var(--rgb-green); border-color: var(--rgb-green); color: var(--bg); }
+    .btn-main:hover,
+    .btn-main:focus-visible {
+      background: var(--rgb-blue);
+      border-color: var(--rgb-blue);
+      color: var(--bg);
+    }
     .btn-sec {
       font-family: var(--fm); font-size: 12px; letter-spacing: .14em;
       text-transform: uppercase; color: var(--dim); text-decoration: none;
@@ -378,6 +388,7 @@
       text-transform: none;
       color: rgba(255,255,255,.58);
     }
+    #system .system-copy .section-cta { margin-top: 24px; }
 
     /* ════════════════════════════════════════════
        DIAGNOSIS
@@ -391,6 +402,7 @@
     }
     .stack-line { display: block; }
     .diag-head .line { display: block; }
+    .diag-head .line:nth-child(2n+3) { margin-top: .22em; }
     .diag-head strong { color: var(--white); }
     .diag-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
     .diag-card {
@@ -399,7 +411,7 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .diag-num {
-      font-family: var(--fm); font-size: 9px; letter-spacing: .2em;
+      font-family: var(--fm); font-size: 14px; letter-spacing: .14em;
       color: var(--accent);
     }
     .diag-card:nth-child(1) .diag-num { color: var(--rgb-red); }
@@ -422,37 +434,30 @@
       max-width: 560px; margin-top: 16px;
       font-size: 16px; color: var(--dim); line-height: 1.75;
     }
-    .fg { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 32px; }
-    .fc { padding: 32px 36px; }
-    .fc.yes { background: transparent; }
-    .fc.no  { background: transparent; }
+    .fg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 32px; }
+    .fc { padding: 26px 22px 26px 26px; border-left: 4px solid var(--border); }
+    .fc.yes { background: transparent; border-color: rgba(42,255,134,.72); }
+    .fc.no  { background: transparent; border-color: rgba(255,56,76,.6); }
     .fc-head {
-      font-family: var(--fd); font-size: 13px; font-weight: 800;
-      letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+      font-family: var(--fd); font-size: clamp(18px, 1.35vw, 22px); font-weight: 800;
+      letter-spacing: .03em; text-transform: uppercase; line-height: 1.05;
+      margin-bottom: 22px; display: flex; align-items: flex-start; gap: 12px;
     }
     .fc.yes .fc-head { color: var(--white); }
     .fc.no  .fc-head { color: var(--dim); }
-    .fc-head::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-    }
-    .fc.yes .fc-head::before { background: var(--accent); }
-    .fc.no  .fc-head::before { background: var(--rgb-red); opacity: .45; }
-    .fl { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .fl { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .fl li {
-      font-size: 16px; line-height: 1.55; padding-left: 18px; position: relative;
+      font-size: 15px; line-height: 1.55; position: relative;
     }
     .fc.yes .fl li { color: var(--off); }
-    .fc.no  .fl li { color: var(--white); text-decoration: line-through; text-decoration-color: rgba(255,56,76,.85); }
-    .fc.yes .fl li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
-    .fc.no  .fl li::before { content: '—'; position: absolute; left: 0; color: var(--rgb-red); opacity: .55; }
+    .fc.no  .fl li { color: var(--white); }
     #filter .section-cta { margin-top: 30px; }
 
     /* ════════════════════════════════════════════
        SYSTEM — Brand3
     ════════════════════════════════════════════ */
     #system { background: transparent; border-top: 1px solid var(--border); }
-    .system-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 48px; }
+    .system-grid { display: grid; grid-template-columns: minmax(0, 1.24fr) minmax(320px, .76fr); gap: 64px; margin-top: 48px; }
 
     .brand3-tag {
       display: inline-block; background: var(--accent-bg);
@@ -462,8 +467,8 @@
       padding: 6px 14px; margin-bottom: 20px;
     }
     .system-copy p {
-      margin-top: 20px; font-size: 16px; color: var(--dim); line-height: 1.8;
-      max-width: 420px;
+      margin-top: 14px; font-size: 16px; color: var(--dim); line-height: 1.8;
+      max-width: 560px;
     }
     .pillars { display: flex; flex-direction: column; }
     .pillar {
@@ -471,7 +476,7 @@
       display: grid; grid-template-columns: 32px 1fr; gap: 14px;
     }
     .pillar:first-child { border-top: 1px solid var(--border); }
-    .pn { font-family: var(--fm); font-size: 9px; color: var(--accent); padding-top: 3px; }
+    .pn { font-family: var(--fm); font-size: 14px; letter-spacing: .14em; color: var(--accent); padding-top: 1px; }
     .pillar:nth-child(1) .pn { color: var(--rgb-red); }
     .pillar:nth-child(2) .pn { color: var(--rgb-green); }
     .pillar:nth-child(3) .pn { color: var(--rgb-blue); }
@@ -813,7 +818,20 @@
       .foot-main { flex-direction: column; }
       .foot-socials { align-items: flex-start; }
     }
+    @media (min-width: 768px) {
+      html { scroll-snap-type: y proximity; }
+      body > section {
+        scroll-snap-align: start;
+      }
+      .sec {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
     @media (max-width: 767px) {
+      html { scroll-snap-type: none; }
       .sec, #cta { padding-top: 64px; padding-bottom: 64px; }
       #filter { padding-top: 60px; padding-bottom: 60px; }
       .nav-links-actions { display: none; }
@@ -1004,8 +1022,9 @@
         margin-right: calc(var(--sidebar) + var(--side-gap) + 64px);
       }
       .diag-head { max-width: min(100%, 1040px); }
-      .system-grid { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); }
-      .system-copy p { max-width: 520px; }
+      .system-grid { grid-template-columns: minmax(0, 1.36fr) minmax(340px, .64fr); gap: 72px; }
+      .system-copy p { max-width: 620px; }
+      .fg { grid-template-columns: repeat(2, minmax(360px, 1fr)); }
       .projects-intro { max-width: 760px; }
       .cta-h { max-width: 680px; }
       .cta-promise { max-width: 760px; }
@@ -1085,7 +1104,7 @@
     <!-- LEFT: Headline -->
     <div class="hero-left">
       <div class="hero-tag">
-        Sprint GTM by FLOC* — Queda 1 plaza. <span data-campaign-month>Mayo</span> <span data-campaign-year>2026</span>.
+        Queda 1 plaza. <span data-campaign-month>Mayo</span> <span data-campaign-year>2026</span>.
       </div>
 
       <h1 class="hero-h1">
@@ -1126,9 +1145,12 @@
     <div class="lbl">Por qué existe</div>
 
     <div class="diag-head reveal">
-      <span class="line">Hay producto. Hay visión.</span>
-      <span class="line">Falta la señal que lo traduce.</span>
-      <span class="line"><strong>Y el tiempo no espera.</strong></span>
+      <span class="line">Hay producto.</span>
+      <span class="line">Hay visión.</span>
+      <span class="line">Falta la señal</span>
+      <span class="line">que lo traduce.</span>
+      <span class="line">Y el tiempo</span>
+      <span class="line">no espera.</span>
     </div>
 
     <div class="diag-grid">
@@ -1170,7 +1192,7 @@
 
     <div class="fg reveal d2">
       <div class="fc yes">
-        <div class="fc-head">Esto es para ti si</div>
+        <div class="fc-head">Esto es para ti si...</div>
         <ul class="fl">
           <li>Vas a ronda, lanzamiento o empuje comercial en los próximos 90 días</li>
           <li>Tienes tracción o producto, pero el relato no circula solo todavía</li>
@@ -1180,7 +1202,7 @@
         </ul>
       </div>
       <div class="fc no">
-        <div class="fc-head">Esto no es para ti si</div>
+        <div class="fc-head">Esto no es para ti si...</div>
         <ul class="fl">
           <li>Solo necesitas que se vea mejor sin cambiar nada de fondo</li>
           <li>Todavía no tienes producto ni tracción real — necesitas otro momento</li>
@@ -1203,42 +1225,39 @@
 
     <div class="system-grid">
       <div class="system-copy reveal">
-        <div class="brand3-tag">FLOC* GTM SYSTEM</div>
         <h2 class="sh">
-          <span class="stack-line">UN</span>
-          <span class="stack-line">RELATO.</span>
-          <span class="stack-line">UNA</span>
-          <span class="stack-line"><span class="mark">PÁGINA.</span></span>
+          <span class="stack-line">UN RELATO.</span>
+          <span class="stack-line"><span class="mark">UNA PÁGINA.</span></span>
           <span class="stack-line">UN EMPUJE.</span>
         </h2>
         <p>Seis semanas. Un sistema completo. Para que dejes de improvisar la respuesta cada vez que alguien nuevo te pregunta qué haces.</p>
         <p>Lo que hace FLOC* de base en cada proyecto de marca, comprimido para un objetivo concreto: <strong style="color:var(--white)">convertir atención en conversaciones con gente que importa.</strong></p>
+        <div class="section-cta reveal d3">
+          <a href="#cta" class="btn-main">Agendar llamada</a>
+          <span class="section-cta-note">30 minutos para decidir si tiene sentido abrir el sprint.</span>
+        </div>
       </div>
 
       <div class="pillars reveal d2">
         <div class="pillar">
           <span class="pn">01</span>
-          <div><div class="p-name">Señal</div><div class="p-desc">Definimos el ángulo de mercado, la tensión de audiencia, el claim principal y las pruebas que hacen que la oferta se pueda repetir.</div></div>
+          <div><div class="p-name">Señal</div><div class="p-desc">Ángulo de mercado, tensión de audiencia, claim principal y pruebas repetibles.</div></div>
         </div>
         <div class="pillar">
           <span class="pn">02</span>
-          <div><div class="p-name">Narrativa</div><div class="p-desc">Convertimos estrategia en un relato claro para web, deck, pitch founder y puntos de contacto de campaña.</div></div>
+          <div><div class="p-name">Narrativa</div><div class="p-desc">Relato claro para web, deck, pitch founder y puntos de contacto clave.</div></div>
         </div>
         <div class="pillar">
           <span class="pn">03</span>
-          <div><div class="p-name">Interfaz</div><div class="p-desc">Diseñamos la landing y el sistema visual como superficie principal de conversión, no como folleto decorativo.</div></div>
+          <div><div class="p-name">Interfaz</div><div class="p-desc">Landing y sistema visual como superficie principal de conversión.</div></div>
         </div>
         <div class="pillar">
           <span class="pn">04</span>
-          <div><div class="p-name">Launch Kit</div><div class="p-desc">Empaquetamos la estructura del deck, módulos de página y assets para que el equipo avance sin reescribir el relato cada vez.</div></div>
+          <div><div class="p-name">Launch Kit</div><div class="p-desc">Deck, módulos de página y assets listos para activar el empuje comercial.</div></div>
         </div>
       </div>
     </div>
 
-    <div class="section-cta reveal d3">
-      <a href="#cta" class="btn-main">Agendar llamada</a>
-      <span class="section-cta-note">30 minutos para decidir si tiene sentido abrir el sprint.</span>
-    </div>
   </section>
 
   <!-- ════ PROJECTS ═══════════════════════════════ -->

@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "python3 -m http.server 3000 --directory public",
-    "build": "rm -rf build && mkdir -p build && cp -R public/. build/",
+    "build": "rm -rf build && mkdir -p build && cp -R public/. build/ && cp build/floc-landing.html build/index.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   }
