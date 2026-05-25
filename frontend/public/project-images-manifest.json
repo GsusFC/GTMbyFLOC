@@ -1,0 +1,296 @@
+{
+  "charms": [
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-04.webp",
+      "bytes": 51692,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-05.webp",
+      "bytes": 90466,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-06.webp",
+      "bytes": 289460,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-07.webp",
+      "bytes": 45654,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-08.webp",
+      "bytes": 104978,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-09.webp",
+      "bytes": 119848,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-10.webp",
+      "bytes": 228434,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-11.webp",
+      "bytes": 86578,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-13.webp",
+      "bytes": 55740,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-14.webp",
+      "bytes": 84180,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-16.webp",
+      "bytes": 305800,
+      "optimized": true
+    },
+    {
+      "project": "charms",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/charms/charms-17.webp",
+      "bytes": 94556,
+      "optimized": true
+    }
+  ],
+  "paid": [
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-03.webp",
+      "bytes": 125860,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-05.webp",
+      "bytes": 349966,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-06.webp",
+      "bytes": 185800,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-07.webp",
+      "bytes": 85536,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-08.webp",
+      "bytes": 133822,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-09.webp",
+      "bytes": 107712,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-10.webp",
+      "bytes": 105984,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-11.webp",
+      "bytes": 671194,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-12.webp",
+      "bytes": 199378,
+      "optimized": true
+    },
+    {
+      "project": "paid",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/paid/paid-13.webp",
+      "bytes": 128928,
+      "optimized": true
+    }
+  ],
+  "aniwa": [
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-02.webp",
+      "bytes": 138624,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-03.webp",
+      "bytes": 47834,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-04.webp",
+      "bytes": 28454,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-05.webp",
+      "bytes": 38382,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-06.webp",
+      "bytes": 50076,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-07.webp",
+      "bytes": 60186,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-08.webp",
+      "bytes": 84182,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-09.webp",
+      "bytes": 233318,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-10.webp",
+      "bytes": 179090,
+      "optimized": true
+    },
+    {
+      "project": "aniwa",
+      "width": 1920,
+      "height": 1080,
+      "ext": "webp",
+      "local": "./project-images-optimized/aniwa/aniwa-11.webp",
+      "bytes": 114064,
+      "optimized": true
+    }
+  ]
+}
