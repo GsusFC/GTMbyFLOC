@@ -217,11 +217,10 @@
     }
     .hero-h1 {
       font-family: var(--fd); font-weight: 800;
-      font-size: clamp(60px, 7.5vw, 112px);
-      line-height: .96; letter-spacing: -.01em;
+      font-size: clamp(44px, 5.15vw, 82px);
+      line-height: .92; letter-spacing: 0;
       text-transform: uppercase;
-      width: max-content;
-      max-width: 100%;
+      width: min(100%, 1020px);
       opacity: 0; transform: translateY(24px);
       animation: fadeUp .9s .5s var(--ease) forwards;
     }
@@ -237,16 +236,53 @@
 
     .hero-sub {
       margin-top: 36px; max-width: 500px;
-      font-size: 16px; color: var(--dim); line-height: 1.75;
+      font-size: clamp(20px, 1.5vw, 24px); color: var(--dim); line-height: 1.45;
+      font-weight: 400;
       opacity: 0; transform: translateY(12px);
       animation: fadeUp .7s .85s var(--ease) forwards;
     }
     .hero-sub-claim {
-      margin-top: 18px;
-      font-size: 18px;
-      font-weight: 600;
-      text-transform: uppercase;
+      margin-top: 24px;
+      text-transform: none;
     }
+    .hero-sub-claim .stack-line { display: block; }
+    .hero-video-prompt {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 620px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp .7s .95s var(--ease) forwards;
+    }
+    .hero-video-prompt-text {
+      max-width: 430px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--dim);
+    }
+    .video-play-button {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 99px;
+      background: var(--rgb-red);
+      color: var(--bg);
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .video-play-button:hover,
+    .video-play-button:focus-visible {
+      background: var(--rgb-blue);
+      border-color: var(--rgb-blue);
+      transform: translateY(-1px);
+    }
+    .video-play-button i { font-size: 20px; line-height: 1; }
     .hero-actions {
       margin-top: 44px; display: flex; align-items: center; gap: 28px;
       opacity: 0; transform: translateY(12px);
@@ -310,6 +346,7 @@
       object-fit: contain; object-position: center center;
       background: var(--bg);
       display: block;
+      pointer-events: auto;
     }
     .video-scanlines {
       position: absolute; inset: 0; pointer-events: none; z-index: 2;
@@ -319,22 +356,6 @@
       );
       opacity: .4;
     }
-    .video-audio-toggle {
-      position: absolute; right: 16px; bottom: 16px; z-index: 4;
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; padding: 0;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 99px;
-      background: rgba(0,0,0,.25);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: var(--white);
-      pointer-events: auto;
-      transition: border-color .2s, background .2s;
-    }
-    .video-audio-toggle i { font-size: 18px; line-height: 1; }
-    .video-audio-toggle:hover { border-color: var(--rgb-green); }
-
     .video-meta {
       position: absolute; left: 48px; right: 48px; top: 32px; z-index: 3;
       display: flex; justify-content: space-between; align-items: center;
@@ -785,13 +806,6 @@
         box-shadow: 0 16px 48px rgba(0,0,0,.48);
       }
       .video-meta { display: none; }
-      .video-audio-toggle {
-        right: 8px;
-        bottom: 8px;
-        width: 30px;
-        height: 30px;
-      }
-      .video-audio-toggle i { font-size: 15px; }
       body.modal-open .hero-right {
         opacity: 0;
         pointer-events: none;
@@ -846,10 +860,12 @@
       .diag-grid { grid-template-columns: 1fr; }
       .hero-h1 {
         width: 100%;
-        font-size: clamp(40px, 12.4vw, 50px);
+        font-size: clamp(34px, 10.4vw, 45px);
+        line-height: .94;
       }
       .hero-left { min-width: 0; }
       .hero-sub { width: 100%; max-width: min(100%, 320px); }
+      .hero-video-prompt { align-items: flex-start; max-width: min(100%, 320px); }
       .hero-actions { gap: 18px; }
       .diag-head .line { white-space: normal; }
       .projects-slider { grid-auto-columns: minmax(260px, 82vw); }
@@ -883,9 +899,10 @@
       .nav-links li:has(.nav-cta) { margin-left: 0; }
       .nav-cta { padding: 9px 13px; }
       .hero-left { padding-top: 104px; }
-      .hero-h1 { font-size: clamp(40px, 12.2vw, 47px); }
-      .hero-sub { font-size: 15px; line-height: 1.65; }
-      .hero-sub-claim { font-size: 16px; }
+      .hero-h1 { font-size: clamp(31px, 9.8vw, 41px); }
+      .hero-sub { font-size: 18px; line-height: 1.5; }
+      .hero-video-prompt-text { font-size: 14px; line-height: 1.55; }
+      .video-play-button { width: 42px; height: 42px; }
       .btn-main { width: 100%; text-align: center; padding-left: 20px; padding-right: 20px; }
       .sh { font-size: clamp(32px, 13vw, 48px); }
       .cta-h { font-size: clamp(31px, 11vw, 40px); }
@@ -1013,7 +1030,7 @@
         padding-right: calc(var(--sidebar) + var(--side-gap) + 64px);
       }
       .hero-left { max-width: 1040px; }
-      .hero-h1 { font-size: clamp(92px, 7.2vw, 140px); }
+      .hero-h1 { font-size: clamp(76px, 5.35vw, 104px); }
       .hero-sub { max-width: 660px; }
       .hero-right { right: 64px; }
       body > section:not(#hero),
@@ -1043,7 +1060,7 @@
         padding-right: calc(var(--sidebar) + var(--side-gap) + 80px);
       }
       .hero-left { max-width: 1220px; }
-      .hero-h1 { font-size: clamp(132px, 7.2vw, 164px); }
+      .hero-h1 { font-size: clamp(96px, 5.1vw, 118px); }
       .hero-sub { max-width: 760px; }
       .hero-right { right: 80px; }
       body > section:not(#hero),
@@ -1104,21 +1121,26 @@
     <!-- LEFT: Headline -->
     <div class="hero-left">
       <div class="hero-tag">
-        Para founders con producto real que van a ronda, lanzamiento o empuje comercial.
+        Solo para founders que ya están construyendo.
       </div>
 
       <h1 class="hero-h1">
-        <span class="stack-line">GO TO</span>
-        <span class="stack-line">MARKET</span>
+        <span class="stack-line">TU MARCA</span>
+        <span class="stack-line">NO ESTÁ</span>
+        <span class="stack-line">PREPARADA</span>
+        <span class="stack-line">PARA EL</span>
+        <span class="stack-line">MERCADO</span>
       </h1>
 
       <p class="hero-sub hero-sub-claim">
-        Sin ruido.
+        <span class="stack-line">En 8 semanas, el mercado entenderá</span>
+        <span class="stack-line">lo que estás construyendo.</span>
       </p>
 
-      <p class="hero-sub">
-        Para founders con producto real que necesitan que el mercado lo entienda antes de la ronda, el lanzamiento o el primer empuje comercial. Sin agencia genérica de por medio.
-      </p>
+      <div class="hero-video-prompt">
+        <p class="hero-video-prompt-text">Dale al play: en el video te explicamos cómo convertimos claridad en mercado.</p>
+        <button class="video-play-button" type="button" data-video-toggle aria-label="Reproducir video"><i class="ph ph-play" aria-hidden="true"></i></button>
+      </div>
 
       <div class="hero-actions">
         <a href="#cta"       class="btn-main">Agenda una llamada</a>
@@ -1129,11 +1151,10 @@
     <div class="hero-right">
       <div class="video-wrap">
         <div class="video-frame">
-          <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
+          <video class="hero-video" muted loop playsinline preload="metadata" aria-label="Video de campaña de GTM BY FLOC*">
             <source src="./hero-campaign-optimized.mp4" type="video/mp4">
           </video>
           <div class="video-scanlines"></div>
-          <button class="video-audio-toggle" id="videoAudioToggle" type="button" aria-pressed="false" aria-label="Activar sonido"><i class="ph ph-speaker-simple-high" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
@@ -1405,43 +1426,49 @@
 
     /* ── Hero video audio ─────────────── */
     const heroVideo = document.querySelector('.hero-video');
-    const videoAudioToggle = document.getElementById('videoAudioToggle');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reduceMotion.matches && heroVideo) {
-      heroVideo.removeAttribute('autoplay');
-      heroVideo.pause();
-    }
-    if (heroVideo && videoAudioToggle) {
-      const audioIcon = videoAudioToggle.querySelector('i');
+    const videoToggleButtons = document.querySelectorAll('[data-video-toggle]');
+    if (heroVideo && videoToggleButtons.length) {
       heroVideo.controls = false;
-      videoAudioToggle.addEventListener('click', async () => {
-        const shouldUnmute = heroVideo.muted;
-        if (shouldUnmute) {
-          heroVideo.muted = false;
-          heroVideo.defaultMuted = false;
-          heroVideo.removeAttribute('muted');
-          heroVideo.volume = 1;
-          heroVideo.controls = true;
-          heroVideo.setAttribute('controls', '');
-          if (audioIcon) audioIcon.className = 'ph ph-speaker-simple-x';
-          videoAudioToggle.setAttribute('aria-pressed', 'true');
-          videoAudioToggle.setAttribute('aria-label', 'Silenciar');
-        } else {
-          heroVideo.muted = true;
-          heroVideo.defaultMuted = true;
-          heroVideo.setAttribute('muted', '');
-          heroVideo.volume = 0;
-          heroVideo.controls = false;
-          heroVideo.removeAttribute('controls');
-          if (audioIcon) audioIcon.className = 'ph ph-speaker-simple-high';
-          videoAudioToggle.setAttribute('aria-pressed', 'false');
-          videoAudioToggle.setAttribute('aria-label', 'Activar sonido');
-        }
+      let videoActivated = false;
+
+      function syncVideoToggleState() {
+        const isPlaying = videoActivated && !heroVideo.paused;
+        videoToggleButtons.forEach(button => {
+          const icon = button.querySelector('i');
+          if (icon) icon.className = isPlaying ? 'ph ph-pause' : 'ph ph-play';
+          button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+          button.setAttribute('aria-label', isPlaying ? 'Pausar video' : 'Reproducir video');
+        });
+      }
+
+      async function playHeroVideo() {
+        videoActivated = true;
+        heroVideo.muted = false;
+        heroVideo.defaultMuted = false;
+        heroVideo.removeAttribute('muted');
+        heroVideo.volume = 1;
+        heroVideo.controls = true;
+        heroVideo.setAttribute('controls', '');
         try {
-          heroVideo.load();
           await heroVideo.play();
         } catch (_) {}
+        syncVideoToggleState();
+      }
+
+      videoToggleButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+          if (videoActivated && !heroVideo.paused) {
+            heroVideo.pause();
+            syncVideoToggleState();
+            return;
+          }
+          await playHeroVideo();
+        });
       });
+
+      heroVideo.addEventListener('play', syncVideoToggleState);
+      heroVideo.addEventListener('pause', syncVideoToggleState);
+      syncVideoToggleState();
     }
 
     /* ── Campaign availability date ─ */
