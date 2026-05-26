@@ -10,6 +10,8 @@
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./Druk-Wide-Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="./Geist-wght.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="./floc-landing.css">
 </head>
 <body>
@@ -232,8 +234,8 @@
     </p>
 
     <div class="projects-shell reveal d2">
-      <div class="projects-slider" id="projectsSlider" aria-label="Casos visuales de FLOC*">
-        <div class="project-loading">Cargando casos visuales</div>
+      <div class="projects-slider" id="projectsSlider" aria-label="Casos visuales de FLOC*" aria-busy="true">
+        <div class="project-loading" role="status" aria-live="polite">Cargando casos visuales</div>
       </div>
 
       <div class="project-slider-controls" aria-label="Controles del slider de proyectos">
@@ -332,7 +334,7 @@
   </footer>
 
   <!-- ════ PROJECT LIGHTBOX ══════════════════════ -->
-  <div id="projectLightbox" class="project-lightbox" role="dialog" aria-modal="true" aria-labelledby="projectLightboxTitle" aria-hidden="true">
+  <div id="projectLightbox" class="project-lightbox" role="dialog" aria-modal="true" aria-labelledby="projectLightboxTitle" aria-hidden="true" inert>
     <div class="project-lightbox-top">
       <h2 id="projectLightboxTitle" class="sr-only">Proyecto</h2>
       <button class="project-lightbox-btn" type="button" data-project-close aria-label="Cerrar galería">×</button>
@@ -345,7 +347,7 @@
   </div>
 
   <!-- ════ BOOKING MODAL ══════════════════════ -->
-  <div id="bookingModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" aria-hidden="true">
+  <div id="bookingModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" aria-hidden="true" inert>
     <div class="modal-dialog" tabindex="-1">
       <h2 id="bookingModalTitle" class="sr-only">Agenda una llamada con FLOC*</h2>
       <button type="button" class="modal-close" data-close-modal aria-label="Cerrar">×</button>

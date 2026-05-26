@@ -288,6 +288,8 @@ function renderProjectSlider() {
       const button = document.createElement('button');
       const media = document.createElement('div');
       const img = document.createElement('img');
+      const width = Number(image.width);
+      const height = Number(image.height);
       button.className = 'project-image-card';
       button.type = 'button';
       button.dataset.projectIndex = String(image.globalIndex);
@@ -296,6 +298,9 @@ function renderProjectSlider() {
       img.src = src;
       img.alt = `${info.title} — imagen ${image.projectIndex + 1}`;
       img.loading = 'lazy';
+      img.decoding = 'async';
+      img.width = width;
+      img.height = height;
       media.append(img);
       button.append(media);
       button.addEventListener('click', () => openProjectLightbox(image.globalIndex));
@@ -308,12 +313,15 @@ function renderProjectMessage(message) {
   if (!projectsSlider) return;
   const status = document.createElement('div');
   status.className = 'project-loading';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
   status.textContent = message;
   projectsSlider.replaceChildren(status);
 }
 
 async function setupProjectSlider() {
   if (!projectsSlider) return;
+  projectsSlider.setAttribute('aria-busy', 'true');
   try {
     const manifest = await loadProjectManifest();
     allProjectImages = flattenProjectImages(manifest);
@@ -324,6 +332,8 @@ async function setupProjectSlider() {
     renderProjectSlider();
   } catch (error) {
     renderProjectMessage('No se pudieron cargar los casos visuales');
+  } finally {
+    projectsSlider.setAttribute('aria-busy', 'false');
   }
 }
 
@@ -348,6 +358,7 @@ async function openProjectLightbox(index) {
   pauseLandingMedia();
   projectLightbox.classList.add('open');
   projectLightbox.setAttribute('aria-hidden', 'false');
+  projectLightbox.removeAttribute('inert');
   document.body.classList.add('project-open');
   renderProjectImage(index);
   projectLightbox.querySelector('[data-project-close]')?.focus();
@@ -357,6 +368,7 @@ function closeProjectLightbox() {
   if (!projectLightbox || !projectLightboxImage) return;
   projectLightbox.classList.remove('open');
   projectLightbox.setAttribute('aria-hidden', 'true');
+  projectLightbox.setAttribute('inert', '');
   document.body.classList.remove('project-open');
   projectLightboxImage.removeAttribute('src');
   if (lastFocusedBeforeProject && typeof lastFocusedBeforeProject.focus === 'function') {
@@ -399,6 +411,7 @@ function openBookingModal() {
   pauseLandingMedia();
   bookingModal.classList.add('open');
   bookingModal.setAttribute('aria-hidden', 'false');
+  bookingModal.removeAttribute('inert');
   document.body.classList.add('modal-open');
   setTimeout(() => bookingClose.focus(), 0);
 }
@@ -406,6 +419,7 @@ function closeBookingModal() {
   if (!bookingModal) return;
   bookingModal.classList.remove('open');
   bookingModal.setAttribute('aria-hidden', 'true');
+  bookingModal.setAttribute('inert', '');
   document.body.classList.remove('modal-open');
   if (lastFocusedBeforeBooking && typeof lastFocusedBeforeBooking.focus === 'function') {
     lastFocusedBeforeBooking.focus();
