@@ -10,7 +10,6 @@
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <link rel="stylesheet" href="./floc-landing.css">
 </head>
 <body>
@@ -20,7 +19,7 @@
 
   <!-- ════ NAV ════════════════════════════════ -->
   <nav id="nav">
-    <a href="#" class="nav-logo" aria-label="GTM by FLOC*">
+    <a href="#hero" class="nav-logo" aria-label="GTM by FLOC*">
       <svg viewBox="0 0 961 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M132.742 209.132H126.362C24.291 209.132 0 159.078 0 117.121V109.76C0 63.3861 27.9714 19.2207 140.348 19.2207H148.199C277.506 19.2207 289.774 65.1036 289.774 91.6029V91.8482H194.573C193.346 87.1863 187.212 74.4274 146.727 74.4274C110.413 74.4274 95.937 89.8853 95.937 111.968V114.176C95.937 136.995 109.677 155.152 145.991 155.152C182.305 155.152 192.119 143.865 192.119 138.958H142.801V101.663H291.001V205.451H228.433C226.716 200.299 222.054 190.975 217.392 186.313C211.503 191.711 189.911 209.132 132.742 209.132Z" fill="currentColor"/>
         <path d="M375.91 205.452V85.7144H297.148V22.9014H547.91V85.7144H469.148V205.452H375.91Z" fill="currentColor"/>
@@ -77,7 +76,7 @@
       </p>
 
       <div class="hero-video-prompt">
-        <button class="video-play-button" type="button" data-video-toggle aria-label="Reproducir video"><i class="ph ph-play" aria-hidden="true"></i></button>
+        <button class="video-play-button" type="button" data-video-toggle aria-label="Reproducir video"><span class="button-icon" aria-hidden="true"></span></button>
         <p class="hero-video-prompt-text">
           Dale al play: en el video te explicamos todo.
         </p>
@@ -251,13 +250,13 @@
 
     <div class="testimonial-grid">
       <div class="testimonial-media reveal">
-        <img class="testimonial-photo" src="https://pbs.twimg.com/profile_images/2052862796908449792/l50I6UDE_400x400.jpg" alt="Gonzalo, fundador y CEO de Charms" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="400" height="400">
+        <img class="testimonial-photo" src="./testimonial-gonzalo.jpg" alt="Gonzalo, fundador y CEO de Charms" loading="lazy" decoding="async" width="400" height="400">
         <div>
           <div class="testimonial-person">Gonzalo</div>
           <div class="testimonial-role">CEO de Charms</div>
         </div>
         <button class="testimonial-audio" type="button" data-testimonial-audio-toggle aria-label="Escuchar audio de Gonzalo">
-          <i class="ph ph-play" aria-hidden="true"></i>
+          <span class="button-icon" aria-hidden="true"></span>
           <span class="testimonial-audio-text">Escúchalo hablar de nosotros.</span>
           <svg class="testimonial-audio-wave" viewBox="0 0 228 44" preserveAspectRatio="none" aria-hidden="true">
             <defs>

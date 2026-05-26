@@ -63,8 +63,6 @@ if (heroVideo && videoToggleButtons.length) {
   function syncVideoToggleState() {
     const isPlaying = videoActivated && !heroVideo.paused;
     videoToggleButtons.forEach(button => {
-      const icon = button.querySelector('i');
-      if (icon) icon.className = isPlaying ? 'ph ph-pause' : 'ph ph-play';
       button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
       button.setAttribute('aria-label', isPlaying ? 'Pausar video' : 'Reproducir video');
     });
@@ -113,7 +111,6 @@ if (heroVideo && videoToggleButtons.length) {
 const testimonialAudio = document.querySelector('[data-testimonial-audio]');
 const testimonialAudioButton = document.querySelector('[data-testimonial-audio-toggle]');
 if (testimonialAudio && testimonialAudioButton) {
-  const testimonialAudioIcon = testimonialAudioButton.querySelector('i');
   const testimonialWaveLines = testimonialAudioButton.querySelectorAll('.testimonial-audio-wave polyline');
   let testimonialAudioContext;
   let testimonialAnalyser;
@@ -175,7 +172,6 @@ if (testimonialAudio && testimonialAudioButton) {
 
   function syncTestimonialAudioState() {
     const isPlaying = !testimonialAudio.paused;
-    if (testimonialAudioIcon) testimonialAudioIcon.className = isPlaying ? 'ph ph-pause' : 'ph ph-play';
     testimonialAudioButton.classList.toggle('is-playing', isPlaying);
     testimonialAudioButton.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
     testimonialAudioButton.setAttribute('aria-label', isPlaying ? 'Pausar audio de Gonzalo' : 'Escuchar audio de Gonzalo');
@@ -301,12 +297,27 @@ function renderProjectSlider() {
   });
 }
 
+function renderProjectMessage(message) {
+  if (!projectsSlider) return;
+  const status = document.createElement('div');
+  status.className = 'project-loading';
+  status.textContent = message;
+  projectsSlider.replaceChildren(status);
+}
+
 async function setupProjectSlider() {
   if (!projectsSlider) return;
-  const manifest = await loadProjectManifest();
-  allProjectImages = flattenProjectImages(manifest);
-  if (!allProjectImages.length) return;
-  renderProjectSlider();
+  try {
+    const manifest = await loadProjectManifest();
+    allProjectImages = flattenProjectImages(manifest);
+    if (!allProjectImages.length) {
+      renderProjectMessage('No hay casos visuales disponibles');
+      return;
+    }
+    renderProjectSlider();
+  } catch (error) {
+    renderProjectMessage('No se pudieron cargar los casos visuales');
+  }
 }
 
 function renderProjectImage(index) {

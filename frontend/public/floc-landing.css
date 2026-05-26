@@ -359,7 +359,32 @@ button:focus-visible {
   border-color: var(--rgb-blue);
   transform: translateY(-1px);
 }
-.video-play-button i { font-size: var(--play-icon-size); line-height: 1; }
+.button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fb);
+  width: var(--play-icon-size);
+  height: var(--play-icon-size);
+}
+.button-icon::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid currentColor;
+  transform: translateX(1px);
+}
+[aria-pressed="true"] > .button-icon::before {
+  width: 10px;
+  height: 14px;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 4px solid currentColor;
+  border-right: 4px solid currentColor;
+  transform: none;
+}
 .btn-main {
   font-family: var(--fm); font-size: var(--btn-font-size); letter-spacing: var(--btn-letter-spacing);
   text-transform: uppercase; background: var(--rgb-green); color: var(--bg);
@@ -837,7 +862,7 @@ body.project-open .hero-right {
   color: var(--rgb-blue);
   background: var(--accent-bg);
 }
-.testimonial-audio i {
+.testimonial-audio .button-icon {
   flex: 0 0 auto;
   font-size: 18px;
   line-height: 1;
