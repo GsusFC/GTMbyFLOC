@@ -77,6 +77,10 @@
       --filter-card-pad-y: 26px;
       --filter-card-pad-x: 26px;
       --filter-list-gap: 10px;
+      --section-kicker-size: 13px;
+      --section-kicker-spacing: .16em;
+      --section-kicker-leading: 1.35;
+      --section-kicker-gap: 16px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -207,13 +211,13 @@
       display: flex; flex-direction: column; justify-content: center;
     }
     .hero-tag,
+    .section-kicker,
     .lbl {
       font-family: var(--fm);
-      font-size: 16px;
-      letter-spacing: .24em;
+      font-size: var(--section-kicker-size);
+      letter-spacing: var(--section-kicker-spacing);
+      line-height: var(--section-kicker-leading);
       text-transform: uppercase;
-      display: flex;
-      align-items: center;
     }
     .hero-tag {
       color: var(--dim); margin-bottom: 32px;
@@ -221,11 +225,7 @@
       animation: fadeUp .6s .3s var(--ease) forwards;
       gap: 10px;
     }
-    .hero-tag::before {
-      content: ''; width: 4px; height: 4px; border-radius: 50%;
-      background: var(--accent); flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
+    .hero-tag::before { display: none; }
     .hero-h1 {
       font-family: var(--fd); font-weight: 800;
       font-size: clamp(44px, 5.15vw, 82px);
@@ -295,11 +295,6 @@
       transform: translateY(-1px);
     }
     .video-play-button i { font-size: 20px; line-height: 1; }
-    .hero-actions {
-      margin-top: 44px; display: flex; align-items: center; gap: 28px;
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp .7s 1s var(--ease) forwards;
-    }
     .btn-main {
       font-family: var(--fm); font-size: var(--btn-font-size); letter-spacing: var(--btn-letter-spacing);
       text-transform: uppercase; background: var(--rgb-green); color: var(--bg);
@@ -330,9 +325,10 @@
       width: min(var(--sidebar), calc((100svh - 128px) * 9 / 16));
       height: auto;
       padding: 0;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: stretch; justify-content: center;
+      gap: 14px;
       opacity: 1;
-      pointer-events: none;
+      pointer-events: auto;
     }
 
     /* VIDEO FRAME */
@@ -359,6 +355,49 @@
       background: var(--bg);
       display: block;
       pointer-events: auto;
+    }
+    .floating-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 58px;
+      padding: 16px 20px;
+      background: var(--rgb-green);
+      border: 0;
+      color: var(--bg);
+      font-family: var(--fm);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: .12em;
+      text-align: left;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 14px 40px rgba(0,0,0,.42), inset 0 0 0 1px rgba(255,255,255,.18);
+      transition: background .2s, border-color .2s, color .2s, transform .2s, box-shadow .2s;
+    }
+    .floating-cta::after {
+      content: '→';
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border: 1px solid rgba(0,0,0,.3);
+      border-radius: 50%;
+      font-family: var(--fb);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .floating-cta:hover,
+    .floating-cta:focus-visible {
+      background: var(--rgb-blue);
+      color: var(--bg);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 48px rgba(0,0,0,.52), 0 0 0 1px rgba(58,122,255,.35);
     }
     .video-scanlines {
       position: absolute; inset: 0; pointer-events: none; z-index: 2;
@@ -392,11 +431,28 @@
        SHARED SECTION UTILS
     ════════════════════════════════════════════ */
     .sec { padding: 84px 48px; }
+    .section-kicker,
     .lbl {
-      color: var(--accent); margin-bottom: 28px;
+      color: var(--accent);
+      margin-bottom: var(--section-kicker-gap);
+      display: inline-flex;
+      align-items: center;
       gap: 14px;
     }
-    .lbl::after { content: ''; height: 1px; width: 48px; background: var(--border); }
+    .section-kicker-line::after,
+    .lbl::after {
+      content: '';
+      height: 1px;
+      width: 48px;
+      background: var(--border);
+    }
+    .section-kicker-stack {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      line-height: 1.15;
+    }
+    .section-kicker-stack::after { display: none; }
 
     .sh {
       font-family: var(--fd); font-weight: 800;
@@ -455,8 +511,9 @@
     }
     .diag-break-kicker {
       font-family: var(--fm);
-      font-size: 12px;
-      letter-spacing: .16em;
+      font-size: var(--section-kicker-size);
+      letter-spacing: var(--section-kicker-spacing);
+      line-height: var(--section-kicker-leading);
       text-transform: uppercase;
       color: var(--rgb-red);
       margin-bottom: 14px;
@@ -512,7 +569,7 @@
     .fc-head {
       font-family: var(--fd); font-size: var(--filter-head-size); font-weight: 800;
       letter-spacing: .03em; text-transform: uppercase; line-height: 1.05;
-      margin-bottom: 22px; display: flex; align-items: flex-start; gap: 12px;
+      margin-bottom: 22px; display: block; text-align: left;
     }
     .fc.yes .fc-head { color: var(--white); }
     .fc.no  .fc-head { color: var(--dim); }
@@ -533,7 +590,7 @@
        SYSTEM — Brand3
     ════════════════════════════════════════════ */
     #system { background: transparent; border-top: 1px solid var(--border); }
-    .system-grid { display: grid; grid-template-columns: minmax(0, 1.24fr) minmax(320px, .76fr); gap: 64px; margin-top: 48px; }
+    .system-grid { display: grid; grid-template-columns: minmax(0, 1.24fr) minmax(320px, .76fr); gap: 64px; margin-top: 0; }
 
     .brand3-tag {
       display: inline-block; background: var(--accent-bg);
@@ -869,12 +926,12 @@
       max-width: 900px;
       padding-left: 20px;
       border-left: 3px solid rgba(255,255,255,.82);
-      font-family: var(--fd);
-      font-size: clamp(22px, 2.05vw, 32px);
-      font-weight: 800;
-      line-height: 1.08;
+      font-family: var(--fb);
+      font-size: clamp(19px, 1.6vw, 25px);
+      font-weight: 400;
+      line-height: 1.3;
       letter-spacing: 0;
-      text-transform: uppercase;
+      text-transform: none;
       color: var(--white);
     }
 
@@ -911,9 +968,9 @@
     ════════════════════════════════════════════ */
     footer { border-top: 1px solid var(--border); background: rgba(0,0,0,.72); }
     .foot-main {
-      padding: 40px 48px 32px;
-      display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 40px;
+      padding: 28px 48px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 32px;
     }
     .foot-brand { display: flex; flex-direction: column; gap: 6px; }
     .foot-logo {
@@ -927,7 +984,7 @@
     }
     .foot-tagline span { font-family: var(--fb); font-weight: 400; font-size: 14px;
                          text-transform: lowercase; letter-spacing: .02em; }
-    .foot-socials { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+    .foot-socials { display: flex; flex-direction: row; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: flex-end; }
     .foot-socials a {
       font-family: var(--fb); font-size: 13px; letter-spacing: 0;
       text-transform: none; color: var(--dim); text-decoration: none;
@@ -937,6 +994,7 @@
     .foot-bottom {
       padding: 16px 48px; border-top: 1px solid var(--border);
       display: flex; justify-content: space-between; align-items: center;
+      gap: 24px;
     }
     .foot-copy { font-family: var(--fb); font-size: 12px; line-height: 1.5; letter-spacing: 0; color: rgba(255,255,255,.72); }
     .foot-links { display: flex; gap: 24px; list-style: none; }
@@ -967,6 +1025,9 @@
     ════════════════════════════════════════════ */
     @media (max-width: 1023px) {
       :root {
+        --floating-rail-pad-x: 24px;
+        --floating-rail-gap: 10px;
+        --floating-video-width: clamp(104px, 18vw, 148px);
         --btn-font-size: 12px;
         --btn-pad-y: 16px;
         --btn-pad-x: 28px;
@@ -978,6 +1039,10 @@
         --filter-card-pad-y: 24px;
         --filter-card-pad-x: 24px;
         --filter-list-gap: 9px;
+        --section-kicker-size: 12px;
+        --section-kicker-spacing: .14em;
+        --section-kicker-leading: 1.4;
+        --section-kicker-gap: 14px;
       }
       nav { padding: 0 24px; gap: 20px; }
       .nav-links-primary { display: none; }
@@ -995,23 +1060,37 @@
         right: 24px;
         bottom: 24px;
         transform: none;
-        width: clamp(104px, 18vw, 148px);
+        width: auto;
         margin: 0;
         z-index: 500;
         pointer-events: auto;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+        gap: var(--floating-rail-gap);
       }
       .video-wrap {
-        width: 100%;
+        width: var(--floating-video-width);
         max-width: none;
         border-radius: 18px;
         box-shadow: 0 16px 48px rgba(0,0,0,.48);
+      }
+      .floating-cta {
+        width: calc(100vw - var(--floating-rail-pad-x) - 24px - var(--floating-video-width) - var(--floating-rail-gap));
+        min-height: 54px;
+        padding: 14px 16px;
+        font-size: 12px;
+        letter-spacing: .1em;
+      }
+      .floating-cta::after {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
       }
       .video-meta { display: none; }
       body.modal-open .hero-right {
         opacity: 0;
         pointer-events: none;
       }
-      .hero-actions { flex-wrap: wrap; gap: 18px; }
       nav, .sec, #cta { padding-left: 24px; padding-right: 24px; }
       .sec, #cta { padding-top: 72px; padding-bottom: 72px; }
       #filter { padding-top: 64px; padding-bottom: 64px; }
@@ -1026,13 +1105,21 @@
       .cta-h .stack-line {
         white-space: normal;
       }
-      .system-grid { margin-top: 36px; }
+      .system-grid { margin-top: 0; }
       .projects-slider { grid-auto-columns: minmax(300px, 58vw); }
       .diag-grid { grid-template-columns: 1fr 1fr; }
       .system-grid, .fg, .testimonial-grid { grid-template-columns: 1fr; gap: 24px; }
-      .testimonial-quote { font-size: clamp(22px, 3.5vw, 30px); }
-      .foot-main { flex-direction: column; }
-      .foot-socials { align-items: flex-start; }
+      .testimonial-quote { font-size: clamp(19px, 2.5vw, 24px); }
+      .foot-main {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .foot-bottom {
+        padding-left: 24px;
+        padding-right: 24px;
+        flex-wrap: wrap;
+      }
+      .foot-socials { justify-content: flex-start; }
     }
     @media (min-width: 768px) {
       html { scroll-snap-type: y proximity; }
@@ -1048,6 +1135,15 @@
     }
     @media (max-width: 767px) {
       :root {
+        --floating-rail-pad-x: 24px;
+        --floating-rail-gap: 10px;
+        --floating-video-width: clamp(108px, 33vw, 144px);
+        --mobile-h1-size: clamp(32px, 8.8vw, 44px);
+        --mobile-h1-leading: .96;
+        --mobile-h2-size: clamp(28px, 8vw, 40px);
+        --mobile-h2-leading: 1.02;
+        --mobile-cta-h-size: clamp(30px, 9vw, 42px);
+        --mobile-cta-h-leading: 1.03;
         --btn-font-size: 12px;
         --btn-pad-y: 15px;
         --btn-pad-x: 24px;
@@ -1057,8 +1153,13 @@
         --filter-head-size: 20px;
         --filter-body-size: 16px;
         --filter-card-pad-y: 22px;
-        --filter-card-pad-x: 22px;
+        --filter-card-pad-x: 0px;
+        --diag-card-pad-x: 18px;
         --filter-list-gap: 8px;
+        --section-kicker-size: 11px;
+        --section-kicker-spacing: .1em;
+        --section-kicker-leading: 1.45;
+        --section-kicker-gap: 14px;
       }
       html { scroll-snap-type: none; }
       .sec, #cta { padding-top: 64px; padding-bottom: 64px; }
@@ -1073,27 +1174,37 @@
       }
       .hero-tag {
         display: block;
+        max-width: 330px;
         margin-bottom: 26px;
-        font-size: 12px;
-        letter-spacing: .16em;
-        line-height: 1.55;
       }
-      .hero-tag::before { display: inline-block; margin-right: 10px; vertical-align: middle; }
+      .hero-tag::before { display: none; }
       .diag-grid { grid-template-columns: 1fr; }
+      .diag-card {
+        padding-left: var(--diag-card-pad-x);
+        padding-right: var(--diag-card-pad-x);
+      }
       .hero-h1 {
         width: 100%;
-        font-size: clamp(34px, 10.4vw, 45px);
-        line-height: .94;
+        font-size: var(--mobile-h1-size);
+        line-height: var(--mobile-h1-leading);
+      }
+      .sh,
+      .diag-head h2 {
+        font-size: var(--mobile-h2-size);
+        line-height: var(--mobile-h2-leading);
+      }
+      .cta-h {
+        font-size: var(--mobile-cta-h-size);
+        line-height: var(--mobile-cta-h-leading);
       }
       .hero-left { min-width: 0; }
       .hero-sub { width: 100%; max-width: min(100%, 320px); }
       .hero-video-prompt { align-items: flex-start; max-width: min(100%, 320px); }
-      .hero-actions { gap: 18px; }
       .projects-slider { grid-auto-columns: minmax(260px, 82vw); }
       .project-slider-controls { justify-content: flex-start; }
       .testimonial-photo { width: 112px; }
       .testimonial-quotes { gap: 16px; }
-      .testimonial-quote { padding-left: 16px; font-size: clamp(21px, 6.5vw, 28px); }
+      .testimonial-quote { padding-left: 16px; font-size: clamp(18px, 5.2vw, 23px); }
       .testimonial-audio { width: min(100%, 220px); }
       .project-lightbox {
         padding: 16px;
@@ -1112,13 +1223,18 @@
       .project-lightbox-nav.prev { left: 10px; }
       .project-lightbox-nav.next { right: 10px; }
       .hero-right {
-        right: 14px;
-        bottom: 16px;
-        width: clamp(82px, 23vw, 104px);
+        right: 18px;
+        bottom: 18px;
       }
+      .floating-cta { width: calc(100vw - var(--floating-rail-pad-x) - 18px - var(--floating-video-width) - var(--floating-rail-gap)); }
     }
     @media (max-width: 479px) {
       :root {
+        --floating-rail-pad-x: 24px;
+        --floating-video-width: clamp(102px, 32vw, 124px);
+        --mobile-h1-size: clamp(31px, 8.6vw, 36px);
+        --mobile-h2-size: clamp(27px, 7.6vw, 34px);
+        --mobile-cta-h-size: clamp(30px, 9vw, 38px);
         --btn-font-size: 12px;
         --btn-pad-y: 15px;
         --btn-pad-x: 20px;
@@ -1128,25 +1244,46 @@
         --filter-head-size: 19px;
         --filter-body-size: 16px;
         --filter-card-pad-y: 22px;
-        --filter-card-pad-x: 20px;
+        --filter-card-pad-x: 0px;
+        --diag-card-pad-x: 16px;
         --filter-list-gap: 8px;
+        --section-kicker-size: 11px;
+        --section-kicker-spacing: .08em;
+        --section-kicker-leading: 1.45;
+        --section-kicker-gap: 12px;
       }
       nav { height: 60px; }
       .nav-logo svg { height: 19px; }
       .nav-links-actions { display: none; }
       .nav-links li:has(.nav-cta) { margin-left: 0; }
       .hero-left { padding-top: 104px; }
-      .hero-h1 { font-size: clamp(31px, 9.8vw, 41px); }
       .hero-sub { font-size: 18px; line-height: 1.5; }
       .hero-video-prompt-text { font-size: 15px; line-height: 1.55; }
       .video-play-button { width: 42px; height: 42px; }
       .btn-main { width: 100%; text-align: center; padding-left: 20px; padding-right: 20px; }
-      .sh { font-size: clamp(32px, 13vw, 48px); }
-      .diag-head h2 { font-size: clamp(32px, 13vw, 48px); }
-      .cta-h { font-size: clamp(31px, 11vw, 40px); }
+      .hero-right { bottom: 8px; }
+      .floating-cta {
+        width: calc(100vw - var(--floating-rail-pad-x) - 18px - var(--floating-video-width) - var(--floating-rail-gap));
+        min-height: 52px;
+        padding: 12px 14px;
+        font-size: 11px;
+        letter-spacing: .08em;
+      }
+      .floating-cta::after {
+        width: 22px;
+        height: 22px;
+        font-size: 15px;
+      }
       .cta-promise { font-size: clamp(15px, 5vw, 18px); }
       .fc { padding: 28px 24px; }
-      .diag-card { padding: 28px 24px; }
+      .diag-card { padding-top: 28px; padding-bottom: 28px; }
+      .foot-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
       .foot-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
 
@@ -1224,7 +1361,7 @@
       .hero-tag,
       .hero-h1,
       .hero-sub,
-      .hero-actions {
+      .floating-cta {
         opacity: 1;
         transform: none;
       }
@@ -1254,11 +1391,13 @@
         --filter-card-pad-y: 24px;
         --filter-card-pad-x: 24px;
         --filter-list-gap: 9px;
+        --section-kicker-size: 12px;
+        --section-kicker-spacing: .14em;
+        --section-kicker-leading: 1.4;
+        --section-kicker-gap: 14px;
       }
       .hero-tag {
-        font-size: 12px;
-        letter-spacing: .18em;
-        line-height: 1.55;
+        max-width: 520px;
       }
       .fg {
         grid-template-columns: 1fr;
@@ -1280,6 +1419,10 @@
         --filter-card-pad-y: 28px;
         --filter-card-pad-x: 30px;
         --filter-list-gap: 11px;
+        --section-kicker-size: 14px;
+        --section-kicker-spacing: .18em;
+        --section-kicker-leading: 1.35;
+        --section-kicker-gap: 18px;
       }
       nav {
         padding-left: 64px;
@@ -1325,6 +1468,10 @@
         --filter-card-pad-y: 32px;
         --filter-card-pad-x: 34px;
         --filter-list-gap: 12px;
+        --section-kicker-size: 15px;
+        --section-kicker-spacing: .18em;
+        --section-kicker-leading: 1.35;
+        --section-kicker-gap: 18px;
       }
       nav {
         padding-left: 80px;
@@ -1386,7 +1533,6 @@
           <span class="label"><span class="count">1</span> reserva disponible en <span class="date"><span data-campaign-month>Mayo</span> <span data-campaign-year>2026</span></span></span>
         </span>
       </li>
-      <li><a href="#cta" class="nav-cta">Agenda ya</a></li>
     </ul>
   </nav>
 
@@ -1396,7 +1542,8 @@
     <!-- LEFT: Headline -->
     <div class="hero-left">
       <div class="hero-tag">
-        Solo para founders que ya están construyendo.
+        <span class="stack-line">Solo para founders</span>
+        <span class="stack-line">que ya están construyendo.</span>
       </div>
 
       <h1 class="hero-h1">
@@ -1419,9 +1566,6 @@
         </p>
       </div>
 
-      <div class="hero-actions">
-        <a href="#cta"       class="btn-main">Agenda una llamada</a>
-      </div>
     </div>
 
     <!-- RIGHT: Video -->
@@ -1434,6 +1578,7 @@
           <div class="video-scanlines"></div>
         </div>
       </div>
+      <a href="#cta" class="floating-cta">Agenda una llamada</a>
     </div>
 
   </section>
@@ -1446,14 +1591,9 @@
       <p><span class="stack-line">Cada vez que explicas qué haces, la historia cambia un poco. El deck cuenta una versión.</span><span class="stack-line">La web, otra. El pitch, otra. Y quien te escucha lo nota aunque no lo diga.</span></p>
     </div>
 
-    <div class="section-cta reveal d1">
-      <a href="#cta" class="btn-main">Agenda llamada</a>
-      <span class="section-cta-note">Si hay encaje, lo decimos en 24h.</span>
-    </div>
-
     <div class="diag-break reveal d2">
       <div class="diag-break-kicker">Lo que frena</div>
-      <h3>Tienes todo. Pero no se entiende.</h3>
+      <h3><span class="stack-line">Tienes todo.</span><span class="stack-line">Pero no se entiende.</span></h3>
     </div>
 
     <div class="diag-grid">
@@ -1477,7 +1617,7 @@
 
   <!-- ════ FILTER ═══════════════════════════════ -->
   <section id="filter" class="sec">
-    <div class="lbl">No es para todo el mundo</div>
+    <div class="section-kicker section-kicker-stack"><span>NO ES</span><span>PARA TODO EL MUNDO</span></div>
 
     <h2 class="sh reveal">
       <span class="stack-line">HECHO PARA</span>
@@ -1512,15 +1652,11 @@
       </div>
     </div>
 
-    <div class="section-cta reveal d3">
-      <a href="#cta" class="btn-main">Ver disponibilidad</a>
-      <span class="section-cta-note">Queda una plaza. Si no hay encaje, lo decimos claro.</span>
-    </div>
   </section>
 
   <!-- ════ SYSTEM ════════════════════════════════ -->
   <section id="system" class="sec">
-    <div class="lbl">Nuestro método</div>
+    <div class="section-kicker section-kicker-line">Nuestro método</div>
 
     <div class="system-grid">
       <div class="system-copy reveal">
@@ -1531,10 +1667,6 @@
         </h2>
         <p>Ocho semanas. Sistema completo de marca, narrativa y lanzamiento.</p>
         <p>Para que la próxima vez que alguien importante te pregunte qué haces, <strong style="color:var(--white)">ya lo sepan antes de preguntar.</strong></p>
-        <div class="section-cta reveal d3">
-          <a href="#cta" class="btn-main">Disponibilidad</a>
-          <span class="section-cta-note">QUEDA 1 PLAZA</span>
-        </div>
       </div>
 
       <div class="pillars reveal d2">
@@ -1557,7 +1689,7 @@
 
   <!-- ════ PROJECTS ═══════════════════════════════ -->
   <section id="projects" class="sec">
-    <div class="lbl">Proyectos</div>
+    <div class="section-kicker section-kicker-line">Proyectos</div>
 
     <h2 class="sh reveal">
       <span class="stack-line">PRUEBA</span>
@@ -1578,15 +1710,11 @@
       </div>
     </div>
 
-    <div class="section-cta reveal d3">
-      <a href="#cta" class="btn-main">Agendar llamada</a>
-      <span class="section-cta-note">Si el reto exige claridad antes de salir al mercado, hablamos.</span>
-    </div>
   </section>
 
   <!-- ════ TESTIMONIAL ═══════════════════════════ -->
   <section id="testimonial" class="sec">
-    <div class="lbl">Testimonio</div>
+    <div class="section-kicker section-kicker-line">Testimonio</div>
 
     <div class="testimonial-grid">
       <div class="testimonial-media reveal">
@@ -1623,23 +1751,18 @@
 
   <!-- ════ CTA ═══════════════════════════════════ -->
   <section id="cta" class="sec">
-    <div class="lbl">Next step</div>
+    <div class="section-kicker section-kicker-line">Next step</div>
 
     <h2 class="cta-h reveal">
       <span class="stack-line">¿ESTÁS LISTO</span>
-      <span class="stack-line">PARA <span class="mark">GO TO MARKET?</span></span>
+      <span class="stack-line">PARA <span class="mark">GO TO</span></span>
+      <span class="stack-line"><span class="mark">MARKET?</span></span>
     </h2>
 
     <p class="cta-promise reveal d1">
       <span class="stack-line"><strong>Si tienes una gran historia que contar, el mercado tiene que saberlo.</strong></span>
     </p>
 
-    <div class="reveal d2">
-      <div class="section-cta">
-        <a href="#cta" class="btn-main">Llamada directa →</a>
-        <span class="section-cta-note">Si hay encaje, arrancamos.</span>
-      </div>
-    </div>
   </section>
 
   <!-- ════ FOOTER ════════════════════════════════ -->
@@ -1655,8 +1778,6 @@
       <div class="foot-socials">
         <a href="https://wearefloc.com"            target="_blank" rel="noopener">wearefloc.com</a>
         <a href="https://x.com/WeareFloc"          target="_blank" rel="noopener">Twitter / X</a>
-        <a href="https://farcaster.xyz/floc"        target="_blank" rel="noopener">Farcaster</a>
-        <a href="https://zora.co/@floc"             target="_blank" rel="noopener">Zora</a>
         <a href="https://discord.gg/WCamVS3QBW"     target="_blank" rel="noopener">Discord</a>
         <a href="https://www.linkedin.com/company/wearefloc/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
