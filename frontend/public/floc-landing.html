@@ -65,6 +65,18 @@
       --bp-3xl: 1920px;
       --sidebar: clamp(320px, 30vw, 480px);
       --side-gap: 32px;
+      --btn-font-size: 13px;
+      --btn-pad-y: 18px;
+      --btn-pad-x: 34px;
+      --btn-letter-spacing: .14em;
+      --nav-btn-font-size: 12px;
+      --nav-btn-pad-y: 10px;
+      --nav-btn-pad-x: 24px;
+      --filter-head-size: 20px;
+      --filter-body-size: 16px;
+      --filter-card-pad-y: 26px;
+      --filter-card-pad-x: 26px;
+      --filter-list-gap: 10px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -138,10 +150,10 @@
       outline-offset: 4px;
     }
     .nav-cta {
-      font-family: var(--fm) !important; font-size: 12px !important; letter-spacing: 0 !important;
+      font-family: var(--fm) !important; font-size: var(--nav-btn-font-size) !important; letter-spacing: 0 !important;
       text-transform: uppercase; background: var(--rgb-green);
       color: #000000 !important;
-      padding: 10px 24px; text-decoration: none;
+      padding: var(--nav-btn-pad-y) var(--nav-btn-pad-x); text-decoration: none;
       border: 1px solid var(--rgb-green);
       transition: background .2s, color .2s, border-color .2s;
     }
@@ -175,7 +187,6 @@
       .nav-availability .label { display: none; }
       .nav-availability { padding: 8px 10px; }
       .nav-links-actions { gap: 14px; }
-      .nav-cta { padding: 10px 16px; font-size: 11px !important; }
     }
 
     /* ════════════════════════════════════════════
@@ -290,9 +301,9 @@
       animation: fadeUp .7s 1s var(--ease) forwards;
     }
     .btn-main {
-      font-family: var(--fm); font-size: 13px; letter-spacing: .14em;
+      font-family: var(--fm); font-size: var(--btn-font-size); letter-spacing: var(--btn-letter-spacing);
       text-transform: uppercase; background: var(--rgb-green); color: var(--bg);
-      padding: 18px 34px; text-decoration: none; border: 1px solid var(--rgb-green);
+      padding: var(--btn-pad-y) var(--btn-pad-x); text-decoration: none; border: 1px solid var(--rgb-green);
       transition: background .2s, color .2s, border-color .2s;
     }
     .btn-main:hover,
@@ -400,7 +411,9 @@
       gap: 18px;
       flex-wrap: wrap;
     }
-    .section-cta .btn-main { padding: 15px 28px; }
+    .section-cta .btn-main {
+      padding: calc(var(--btn-pad-y) - 3px) calc(var(--btn-pad-x) - 6px);
+    }
     .section-cta-note {
       max-width: 320px;
       font-family: var(--fb);
@@ -490,19 +503,22 @@
       font-size: clamp(16px, 1.2vw, 18px); color: var(--dim); line-height: 1.65;
     }
     .fg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 32px; }
-    .fc { padding: 26px 22px 26px 26px; border-left: 4px solid var(--border); }
+    .fc {
+      padding: var(--filter-card-pad-y) calc(var(--filter-card-pad-x) - 4px) var(--filter-card-pad-y) var(--filter-card-pad-x);
+      border-left: 4px solid var(--border);
+    }
     .fc.yes { background: transparent; border-color: rgba(42,255,134,.72); }
     .fc.no  { background: transparent; border-color: rgba(255,56,76,.6); }
     .fc-head {
-      font-family: var(--fd); font-size: clamp(20px, 1.35vw, 22px); font-weight: 800;
+      font-family: var(--fd); font-size: var(--filter-head-size); font-weight: 800;
       letter-spacing: .03em; text-transform: uppercase; line-height: 1.05;
       margin-bottom: 22px; display: flex; align-items: flex-start; gap: 12px;
     }
     .fc.yes .fc-head { color: var(--white); }
     .fc.no  .fc-head { color: var(--dim); }
-    .fl { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .fl { list-style: none; display: flex; flex-direction: column; gap: var(--filter-list-gap); }
     .fl li {
-      font-size: 16px; line-height: 1.6; position: relative;
+      font-size: var(--filter-body-size); line-height: 1.6; position: relative;
     }
     .fc.yes .fl li { color: var(--off); }
     .fc.no  .fl li {
@@ -950,6 +966,19 @@
        RESPONSIVE
     ════════════════════════════════════════════ */
     @media (max-width: 1023px) {
+      :root {
+        --btn-font-size: 12px;
+        --btn-pad-y: 16px;
+        --btn-pad-x: 28px;
+        --nav-btn-font-size: 12px;
+        --nav-btn-pad-y: 10px;
+        --nav-btn-pad-x: 18px;
+        --filter-head-size: 20px;
+        --filter-body-size: 16px;
+        --filter-card-pad-y: 24px;
+        --filter-card-pad-x: 24px;
+        --filter-list-gap: 9px;
+      }
       nav { padding: 0 24px; gap: 20px; }
       .nav-links-primary { display: none; }
       #hero {
@@ -1018,10 +1047,30 @@
       }
     }
     @media (max-width: 767px) {
+      :root {
+        --btn-font-size: 12px;
+        --btn-pad-y: 15px;
+        --btn-pad-x: 24px;
+        --nav-btn-font-size: 11px;
+        --nav-btn-pad-y: 10px;
+        --nav-btn-pad-x: 16px;
+        --filter-head-size: 20px;
+        --filter-body-size: 16px;
+        --filter-card-pad-y: 22px;
+        --filter-card-pad-x: 22px;
+        --filter-list-gap: 8px;
+      }
       html { scroll-snap-type: none; }
       .sec, #cta { padding-top: 64px; padding-bottom: 64px; }
       #filter { padding-top: 60px; padding-bottom: 60px; }
       .nav-links-actions { display: none; }
+      .hero-h1,
+      .diag-head h2,
+      .sh,
+      .cta-h {
+        word-break: auto-phrase;
+        hyphens: none;
+      }
       .hero-tag {
         display: block;
         margin-bottom: 26px;
@@ -1069,11 +1118,23 @@
       }
     }
     @media (max-width: 479px) {
+      :root {
+        --btn-font-size: 12px;
+        --btn-pad-y: 15px;
+        --btn-pad-x: 20px;
+        --nav-btn-font-size: 11px;
+        --nav-btn-pad-y: 9px;
+        --nav-btn-pad-x: 13px;
+        --filter-head-size: 19px;
+        --filter-body-size: 16px;
+        --filter-card-pad-y: 22px;
+        --filter-card-pad-x: 20px;
+        --filter-list-gap: 8px;
+      }
       nav { height: 60px; }
       .nav-logo svg { height: 19px; }
       .nav-links-actions { display: none; }
       .nav-links li:has(.nav-cta) { margin-left: 0; }
-      .nav-cta { padding: 9px 13px; }
       .hero-left { padding-top: 104px; }
       .hero-h1 { font-size: clamp(31px, 9.8vw, 41px); }
       .hero-sub { font-size: 18px; line-height: 1.5; }
@@ -1187,16 +1248,38 @@
       }
     }
     @media (min-width: 1024px) and (max-width: 1279px) {
+      :root {
+        --filter-head-size: 21px;
+        --filter-body-size: 16px;
+        --filter-card-pad-y: 24px;
+        --filter-card-pad-x: 24px;
+        --filter-list-gap: 9px;
+      }
       .hero-tag {
         font-size: 12px;
         letter-spacing: .18em;
         line-height: 1.55;
+      }
+      .fg {
+        grid-template-columns: 1fr;
+        max-width: 720px;
       }
     }
     @media (min-width: 1440px) {
       :root {
         --sidebar: clamp(400px, 28vw, 500px);
         --side-gap: 56px;
+        --btn-font-size: 15px;
+        --btn-pad-y: 19px;
+        --btn-pad-x: 38px;
+        --nav-btn-font-size: 13px;
+        --nav-btn-pad-y: 11px;
+        --nav-btn-pad-x: 28px;
+        --filter-head-size: 22px;
+        --filter-body-size: 17px;
+        --filter-card-pad-y: 28px;
+        --filter-card-pad-x: 30px;
+        --filter-list-gap: 11px;
       }
       nav {
         padding-left: 64px;
@@ -1230,6 +1313,18 @@
       :root {
         --sidebar: clamp(480px, 26vw, 560px);
         --side-gap: 72px;
+        --btn-font-size: 16px;
+        --btn-pad-y: 20px;
+        --btn-pad-x: 42px;
+        --btn-letter-spacing: .12em;
+        --nav-btn-font-size: 14px;
+        --nav-btn-pad-y: 12px;
+        --nav-btn-pad-x: 32px;
+        --filter-head-size: 24px;
+        --filter-body-size: 18px;
+        --filter-card-pad-y: 32px;
+        --filter-card-pad-x: 34px;
+        --filter-list-gap: 12px;
       }
       nav {
         padding-left: 80px;
@@ -1313,8 +1408,8 @@
       </h1>
 
       <p class="hero-sub hero-sub-claim">
-        <span class="stack-line">En 8 semanas, el mercado entenderá</span>
-        <span class="stack-line">lo que estás construyendo.</span>
+        <span class="stack-line">En 8 semanas construimos juntos</span>
+        <span class="stack-line">el sistema que lo hace posible.</span>
       </p>
 
       <div class="hero-video-prompt">
@@ -1390,7 +1485,8 @@
       <span class="stack-line"><span class="mark">REAL.</span></span>
     </h2>
     <p class="filter-sub reveal d1">
-      Para cuando el momento ya está aquí y no puedes permitirte que el mercado no lo entienda.
+      <span class="stack-line">Para cuando el momento ya está aquí</span>
+      <span class="stack-line">y no puedes permitirte que el mercado no lo entienda.</span>
     </p>
 
     <div class="fg reveal d2">
