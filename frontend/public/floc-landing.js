@@ -1,0 +1,420 @@
+/* ── Cursor ──────────────────────────── */
+const dot  = document.getElementById('c-dot');
+const ring = document.getElementById('c-ring');
+const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+if (dot && ring && hasFinePointer) {
+  document.addEventListener('mousemove', e => {
+    dot.style.left  = e.clientX + 'px';
+    dot.style.top   = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('grow'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('grow'));
+  });
+}
+
+/* ── Nav scroll ─────────────────────── */
+const navEl = document.getElementById('nav');
+if (navEl) {
+  window.addEventListener('scroll', () => {
+    navEl.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+}
+
+/* ── Scroll reveal ──────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('on'));
+}
+
+/* ── Hero video audio ─────────────── */
+const heroVideo = document.querySelector('.hero-video');
+const videoToggleButtons = document.querySelectorAll('[data-video-toggle]');
+if (heroVideo && videoToggleButtons.length) {
+  heroVideo.controls = true;
+  heroVideo.setAttribute('controls', '');
+  heroVideo.loop = true;
+  let videoActivated = false;
+
+  function syncVideoToggleState() {
+    const isPlaying = videoActivated && !heroVideo.paused;
+    videoToggleButtons.forEach(button => {
+      const icon = button.querySelector('i');
+      if (icon) icon.className = isPlaying ? 'ph ph-pause' : 'ph ph-play';
+      button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+      button.setAttribute('aria-label', isPlaying ? 'Pausar video' : 'Reproducir video');
+    });
+  }
+
+  async function playHeroVideo() {
+    const isFirstActivation = !videoActivated;
+    videoActivated = true;
+    if (isFirstActivation) {
+      heroVideo.pause();
+      heroVideo.currentTime = 0;
+      heroVideo.loop = false;
+      heroVideo.removeAttribute('loop');
+    }
+    heroVideo.muted = false;
+    heroVideo.defaultMuted = false;
+    heroVideo.removeAttribute('muted');
+    heroVideo.volume = 1;
+    heroVideo.controls = true;
+    heroVideo.setAttribute('controls', '');
+    try {
+      await heroVideo.play();
+    } catch (_) {}
+    syncVideoToggleState();
+  }
+
+  videoToggleButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      if (videoActivated && !heroVideo.paused) {
+        heroVideo.pause();
+        syncVideoToggleState();
+        return;
+      }
+      await playHeroVideo();
+    });
+  });
+
+  heroVideo.addEventListener('play', syncVideoToggleState);
+  heroVideo.addEventListener('pause', syncVideoToggleState);
+  syncVideoToggleState();
+}
+
+/* ── Testimonial audio ─────────────── */
+const testimonialAudio = document.querySelector('[data-testimonial-audio]');
+const testimonialAudioButton = document.querySelector('[data-testimonial-audio-toggle]');
+if (testimonialAudio && testimonialAudioButton) {
+  const testimonialAudioIcon = testimonialAudioButton.querySelector('i');
+  const testimonialWaveLines = testimonialAudioButton.querySelectorAll('.testimonial-audio-wave polyline');
+  let testimonialAudioContext;
+  let testimonialAnalyser;
+  let testimonialAudioSource;
+  let testimonialWaveFrame;
+  let testimonialWaveShift = 0;
+
+  function drawIdleTestimonialWave() {
+    testimonialWaveLines.forEach((line, lineIndex) => {
+      const points = Array.from({ length: 42 }, (_, index) => {
+        const x = (index / 41) * 228;
+        const y = 22 + Math.sin(index * .54 + lineIndex * .9) * (3.8 + lineIndex);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+      line.setAttribute('points', points);
+    });
+  }
+
+  function drawTestimonialWave() {
+    if (!testimonialAnalyser || testimonialAudio.paused) {
+      drawIdleTestimonialWave();
+      return;
+    }
+    const data = new Uint8Array(testimonialAnalyser.frequencyBinCount);
+    testimonialAnalyser.getByteTimeDomainData(data);
+    const pointCount = 48;
+    testimonialWaveShift += .12;
+    testimonialWaveLines.forEach((line, lineIndex) => {
+      const points = [];
+      const offset = (lineIndex - 1.5) * 2.2;
+      const gain = 13 + lineIndex * 2.2;
+      for (let index = 0; index < pointCount; index += 1) {
+        const sampleIndex = Math.floor((index / pointCount) * data.length);
+        const sample = (data[sampleIndex] - 128) / 128;
+        const progress = testimonialAudio.duration ? testimonialAudio.currentTime / testimonialAudio.duration : 0;
+        const x = (index / (pointCount - 1)) * 228;
+        const envelope = Math.sin((index / (pointCount - 1)) * Math.PI);
+        const organic = Math.sin(index * (.42 + lineIndex * .06) + testimonialWaveShift + lineIndex) * (3.4 + lineIndex);
+        const y = 22 + offset + (sample * gain * envelope) + organic + ((progress - .5) * 2);
+        points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+      }
+      line.setAttribute('points', points.join(' '));
+    });
+    testimonialWaveFrame = requestAnimationFrame(drawTestimonialWave);
+  }
+
+  async function setupTestimonialAnalyser() {
+    if (testimonialAnalyser) return;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    testimonialAudioContext = new AudioContextClass();
+    testimonialAnalyser = testimonialAudioContext.createAnalyser();
+    testimonialAnalyser.fftSize = 512;
+    testimonialAnalyser.smoothingTimeConstant = .82;
+    testimonialAudioSource = testimonialAudioContext.createMediaElementSource(testimonialAudio);
+    testimonialAudioSource.connect(testimonialAnalyser);
+    testimonialAnalyser.connect(testimonialAudioContext.destination);
+  }
+
+  function syncTestimonialAudioState() {
+    const isPlaying = !testimonialAudio.paused;
+    if (testimonialAudioIcon) testimonialAudioIcon.className = isPlaying ? 'ph ph-pause' : 'ph ph-play';
+    testimonialAudioButton.classList.toggle('is-playing', isPlaying);
+    testimonialAudioButton.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+    testimonialAudioButton.setAttribute('aria-label', isPlaying ? 'Pausar audio de Gonzalo' : 'Escuchar audio de Gonzalo');
+    if (!isPlaying) {
+      cancelAnimationFrame(testimonialWaveFrame);
+      drawIdleTestimonialWave();
+    }
+  }
+
+  testimonialAudioButton.addEventListener('click', async () => {
+    if (!testimonialAudio.paused) {
+      testimonialAudio.pause();
+      syncTestimonialAudioState();
+      return;
+    }
+    if (heroVideo && !heroVideo.paused) heroVideo.pause();
+    try {
+      await setupTestimonialAnalyser();
+      if (testimonialAudioContext && testimonialAudioContext.state === 'suspended') {
+        await testimonialAudioContext.resume();
+      }
+      await testimonialAudio.play();
+    } catch (_) {}
+    cancelAnimationFrame(testimonialWaveFrame);
+    drawTestimonialWave();
+    syncTestimonialAudioState();
+  });
+
+  testimonialAudio.addEventListener('play', syncTestimonialAudioState);
+  testimonialAudio.addEventListener('pause', syncTestimonialAudioState);
+  testimonialAudio.addEventListener('ended', () => {
+    testimonialAudio.currentTime = 0;
+    syncTestimonialAudioState();
+  });
+  drawIdleTestimonialWave();
+  syncTestimonialAudioState();
+}
+
+/* ── Campaign availability date ─ */
+(function () {
+  const campaignDate = { month: 'Mayo', year: '2026' };
+  document.querySelectorAll('[data-campaign-month]').forEach(el => { el.textContent = campaignDate.month; });
+  document.querySelectorAll('[data-campaign-year]').forEach(el => { el.textContent = campaignDate.year; });
+})();
+
+/* ── Project galleries ───────────────── */
+const projectLabels = {
+  charms: {
+    title: 'Charms',
+    label: 'Agentic games / Onchain',
+    desc: 'Narrativa, dirección visual y primera capa de marca para un universo de juego vivo.'
+  },
+  paid: {
+    title: 'PAID',
+    label: 'Fintech / Platform',
+    desc: 'Reposicionamiento visual y UX/UI para una plataforma financiera más accesible.'
+  },
+  aniwa: {
+    title: 'Aniwa',
+    label: 'Insurance / Product',
+    desc: 'Naming, marca, landing y guardianship de producto para simplificar una categoría difícil.'
+  }
+};
+const projectOrder = ['charms', 'paid', 'aniwa'];
+const projectsSlider = document.getElementById('projectsSlider');
+const projectLightbox = document.getElementById('projectLightbox');
+const projectLightboxTitle = document.getElementById('projectLightboxTitle');
+const projectLightboxImage = document.getElementById('projectLightboxImage');
+let projectManifestPromise = null;
+let allProjectImages = [];
+let activeProjectIndex = 0;
+let lastFocusedBeforeProject = null;
+
+function loadProjectManifest() {
+  if (!projectManifestPromise) {
+    projectManifestPromise = fetch('./project-images-manifest.json').then(res => {
+      if (!res.ok) throw new Error('No se pudo cargar el manifest de proyectos');
+      return res.json();
+    });
+  }
+  return projectManifestPromise;
+}
+
+function flattenProjectImages(manifest) {
+  let globalIndex = 0;
+  return projectOrder.flatMap(project => (
+    (manifest[project] || [])
+      .filter(image => {
+        const width = Number(image.width);
+        const height = Number(image.height);
+        return width > 0 && height > 0 && Math.abs((width / height) - (16 / 9)) < 0.01;
+      })
+      .map((image, index) => ({
+        ...image,
+        project,
+        projectIndex: index,
+        globalIndex: globalIndex++
+      }))
+  ));
+}
+
+function renderProjectSlider() {
+  if (!projectsSlider) return;
+  projectsSlider.innerHTML = projectOrder.map(project => {
+    const info = projectLabels[project];
+    const images = allProjectImages.filter(image => image.project === project);
+    const slides = images.map(image => {
+      const src = `${image.local}?v=${image.bytes}`;
+      return `
+        <button class="project-image-card" type="button" data-project-index="${image.globalIndex}" aria-label="Ampliar ${info.title}, imagen ${image.projectIndex + 1}">
+          <div class="project-media">
+            <img src="${src}" alt="${info.title} — imagen ${image.projectIndex + 1}" loading="lazy">
+          </div>
+        </button>`;
+    }).join('');
+    return slides;
+  }).join('');
+
+  projectsSlider.querySelectorAll('[data-project-index]').forEach(button => {
+    button.addEventListener('click', () => openProjectLightbox(Number(button.dataset.projectIndex)));
+  });
+}
+
+async function setupProjectSlider() {
+  if (!projectsSlider) return;
+  const manifest = await loadProjectManifest();
+  allProjectImages = flattenProjectImages(manifest);
+  if (!allProjectImages.length) return;
+  renderProjectSlider();
+}
+
+function renderProjectImage(index) {
+  if (!allProjectImages.length || !projectLightboxImage || !projectLightboxTitle) return;
+  activeProjectIndex = (index + allProjectImages.length) % allProjectImages.length;
+  const image = allProjectImages[activeProjectIndex];
+  const info = projectLabels[image.project] || { title: image.project, label: '' };
+  projectLightboxImage.src = `${image.local}?v=${image.bytes}`;
+  projectLightboxImage.alt = `${info.title} — imagen ${image.projectIndex + 1}`;
+  projectLightboxTitle.textContent = `${info.title} — imagen ${image.projectIndex + 1}`;
+}
+
+async function openProjectLightbox(index) {
+  if (!projectLightbox || !projectLightboxImage || !projectLightboxTitle) return;
+  if (!allProjectImages.length) {
+    const manifest = await loadProjectManifest();
+    allProjectImages = flattenProjectImages(manifest);
+  }
+  if (!allProjectImages.length) return;
+  lastFocusedBeforeProject = document.activeElement;
+  projectLightbox.classList.add('open');
+  projectLightbox.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('project-open');
+  renderProjectImage(index);
+  projectLightbox.querySelector('[data-project-close]')?.focus();
+}
+
+function closeProjectLightbox() {
+  if (!projectLightbox || !projectLightboxImage) return;
+  projectLightbox.classList.remove('open');
+  projectLightbox.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('project-open');
+  projectLightboxImage.removeAttribute('src');
+  if (lastFocusedBeforeProject && typeof lastFocusedBeforeProject.focus === 'function') {
+    lastFocusedBeforeProject.focus();
+  }
+}
+
+setupProjectSlider();
+document.querySelectorAll('[data-project-scroll]').forEach(button => {
+  button.addEventListener('click', () => {
+    if (!projectsSlider) return;
+    const direction = Number(button.dataset.projectScroll);
+    projectsSlider.scrollBy({ left: direction * projectsSlider.clientWidth * 0.82, behavior: 'smooth' });
+  });
+});
+if (projectLightbox) {
+  projectLightbox.querySelector('[data-project-close]')?.addEventListener('click', closeProjectLightbox);
+  projectLightbox.querySelector('[data-project-prev]')?.addEventListener('click', () => renderProjectImage(activeProjectIndex - 1));
+  projectLightbox.querySelector('[data-project-next]')?.addEventListener('click', () => renderProjectImage(activeProjectIndex + 1));
+  projectLightbox.addEventListener('click', e => {
+    if (e.target === projectLightbox) closeProjectLightbox();
+  });
+}
+
+/* ── Booking modal ──────────────────── */
+const bookingModal = document.getElementById('bookingModal');
+const bookingDialog = bookingModal?.querySelector('.modal-dialog');
+const bookingClose = bookingModal?.querySelector('[data-close-modal]');
+const bookingIframe = document.getElementById('EFOOmskKFRG1z1pU66VF_1779557718745');
+const BOOKING_SRC = 'https://api.leadconnectorhq.com/widget/booking/EFOOmskKFRG1z1pU66VF';
+let lastFocusedBeforeBooking = null;
+
+function openBookingModal() {
+  if (!bookingModal || !bookingClose) return;
+  if (bookingIframe && !bookingIframe.getAttribute('src')) {
+    bookingIframe.setAttribute('src', BOOKING_SRC);
+  }
+  lastFocusedBeforeBooking = document.activeElement;
+  bookingModal.classList.add('open');
+  bookingModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  setTimeout(() => bookingClose.focus(), 0);
+}
+function closeBookingModal() {
+  if (!bookingModal) return;
+  bookingModal.classList.remove('open');
+  bookingModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  if (lastFocusedBeforeBooking && typeof lastFocusedBeforeBooking.focus === 'function') {
+    lastFocusedBeforeBooking.focus();
+  }
+}
+
+document.querySelectorAll('a[href="#cta"]').forEach(el => {
+  el.addEventListener('click', e => {
+    e.preventDefault();
+    openBookingModal();
+  });
+});
+document.querySelectorAll('[data-close-modal]').forEach(el => {
+  el.addEventListener('click', closeBookingModal);
+});
+bookingModal?.addEventListener('click', e => {
+  if (e.target === bookingModal) closeBookingModal();
+});
+document.addEventListener('keydown', e => {
+  if (projectLightbox?.classList.contains('open')) {
+    if (e.key === 'Escape') closeProjectLightbox();
+    if (e.key === 'ArrowLeft') renderProjectImage(activeProjectIndex - 1);
+    if (e.key === 'ArrowRight') renderProjectImage(activeProjectIndex + 1);
+    if (e.key === 'Tab') {
+      const focusableProject = projectLightbox.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if (!focusableProject.length) return;
+      const firstProject = focusableProject[0];
+      const lastProject = focusableProject[focusableProject.length - 1];
+      if (e.shiftKey && document.activeElement === firstProject) {
+        e.preventDefault();
+        lastProject.focus();
+      } else if (!e.shiftKey && document.activeElement === lastProject) {
+        e.preventDefault();
+        firstProject.focus();
+      }
+    }
+    return;
+  }
+  if (e.key === 'Escape' && bookingModal?.classList.contains('open')) closeBookingModal();
+  if (e.key !== 'Tab' || !bookingModal?.classList.contains('open') || !bookingDialog) return;
+
+  const focusable = bookingDialog.querySelectorAll('button, iframe, [href], [tabindex]:not([tabindex="-1"])');
+  if (!focusable.length) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
