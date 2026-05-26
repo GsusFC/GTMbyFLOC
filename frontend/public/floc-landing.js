@@ -26,9 +26,11 @@ if (dot && ring && hasFinePointer) {
     ring.style.left = e.clientX + 'px';
     ring.style.top  = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('grow'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('grow'));
+  document.addEventListener('pointerover', e => {
+    if (e.target instanceof Element && e.target.closest('a, button')) ring.classList.add('grow');
+  });
+  document.addEventListener('pointerout', e => {
+    if (e.target instanceof Element && e.target.closest('a, button')) ring.classList.remove('grow');
   });
 }
 
@@ -213,6 +215,11 @@ if (testimonialAudio && testimonialAudioButton) {
   syncTestimonialAudioState();
 }
 
+function pauseLandingMedia() {
+  if (heroVideo && !heroVideo.paused) heroVideo.pause();
+  if (testimonialAudio && !testimonialAudio.paused) testimonialAudio.pause();
+}
+
 /* ── Campaign availability date ─ */
 (function () {
   const campaignDate = { month: 'Mayo', year: '2026' };
@@ -338,6 +345,7 @@ async function openProjectLightbox(index) {
   }
   if (!allProjectImages.length) return;
   lastFocusedBeforeProject = document.activeElement;
+  pauseLandingMedia();
   projectLightbox.classList.add('open');
   projectLightbox.setAttribute('aria-hidden', 'false');
   document.body.classList.add('project-open');
@@ -388,6 +396,7 @@ function openBookingModal() {
     bookingIframe.setAttribute('src', BOOKING_SRC);
   }
   lastFocusedBeforeBooking = document.activeElement;
+  pauseLandingMedia();
   bookingModal.classList.add('open');
   bookingModal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');

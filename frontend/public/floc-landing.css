@@ -144,6 +144,7 @@
   --control-size-lg: 42px;
   --play-size: 46px;
   --play-icon-size: 20px;
+  --testimonial-photo-size: clamp(112px, 10vw, 148px);
   --footer-logo-size: 16px;
   --footer-tag-size: 22px;
   --final-cta-min-height: 68svh;
@@ -809,9 +810,10 @@ body.project-open .hero-right {
   align-items: flex-start;
 }
 .testimonial-photo {
-  width: clamp(112px, 10vw, 148px);
-  aspect-ratio: 1;
+  width: var(--testimonial-photo-size);
+  height: var(--testimonial-photo-size);
   object-fit: cover;
+  object-position: center;
   border-radius: 50%;
   border: 1px solid var(--border);
   filter: grayscale(1) contrast(1.08);
@@ -1219,7 +1221,10 @@ body.modal-open { overflow: hidden; }
   .hero-video-prompt { align-items: flex-start; max-width: min(100%, 320px); }
   .projects-slider { grid-auto-columns: minmax(260px, 82vw); }
   .project-slider-controls { justify-content: flex-start; }
-  .testimonial-photo { width: 112px; }
+  .testimonial-photo {
+    width: 112px;
+    height: 112px;
+  }
   .testimonial-quotes { gap: 16px; }
   .testimonial-quote { padding-left: 16px; }
   .testimonial-audio { width: min(100%, 220px); }
