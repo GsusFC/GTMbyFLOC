@@ -222,19 +222,13 @@ if (testimonialAudio && testimonialAudioButton) {
 /* ── Project galleries ───────────────── */
 const projectLabels = {
   charms: {
-    title: 'Charms',
-    label: 'Agentic games / Onchain',
-    desc: 'Narrativa, dirección visual y primera capa de marca para un universo de juego vivo.'
+    title: 'Charms'
   },
   paid: {
-    title: 'PAID',
-    label: 'Fintech / Platform',
-    desc: 'Reposicionamiento visual y UX/UI para una plataforma financiera más accesible.'
+    title: 'PAID'
   },
   aniwa: {
-    title: 'Aniwa',
-    label: 'Insurance / Product',
-    desc: 'Naming, marca, landing y guardianship de producto para simplificar una categoría difícil.'
+    title: 'Aniwa'
   }
 };
 const projectOrder = ['charms', 'paid', 'aniwa'];
@@ -277,23 +271,28 @@ function flattenProjectImages(manifest) {
 
 function renderProjectSlider() {
   if (!projectsSlider) return;
-  projectsSlider.innerHTML = projectOrder.map(project => {
+  projectsSlider.replaceChildren();
+  projectOrder.forEach(project => {
     const info = projectLabels[project];
     const images = allProjectImages.filter(image => image.project === project);
-    const slides = images.map(image => {
+    images.forEach(image => {
       const src = `${image.local}?v=${image.bytes}`;
-      return `
-        <button class="project-image-card" type="button" data-project-index="${image.globalIndex}" aria-label="Ampliar ${info.title}, imagen ${image.projectIndex + 1}">
-          <div class="project-media">
-            <img src="${src}" alt="${info.title} — imagen ${image.projectIndex + 1}" loading="lazy">
-          </div>
-        </button>`;
-    }).join('');
-    return slides;
-  }).join('');
-
-  projectsSlider.querySelectorAll('[data-project-index]').forEach(button => {
-    button.addEventListener('click', () => openProjectLightbox(Number(button.dataset.projectIndex)));
+      const button = document.createElement('button');
+      const media = document.createElement('div');
+      const img = document.createElement('img');
+      button.className = 'project-image-card';
+      button.type = 'button';
+      button.dataset.projectIndex = String(image.globalIndex);
+      button.setAttribute('aria-label', `Ampliar ${info.title}, imagen ${image.projectIndex + 1}`);
+      media.className = 'project-media';
+      img.src = src;
+      img.alt = `${info.title} — imagen ${image.projectIndex + 1}`;
+      img.loading = 'lazy';
+      media.append(img);
+      button.append(media);
+      button.addEventListener('click', () => openProjectLightbox(image.globalIndex));
+      projectsSlider.append(button);
+    });
   });
 }
 
@@ -309,7 +308,7 @@ function renderProjectImage(index) {
   if (!allProjectImages.length || !projectLightboxImage || !projectLightboxTitle) return;
   activeProjectIndex = (index + allProjectImages.length) % allProjectImages.length;
   const image = allProjectImages[activeProjectIndex];
-  const info = projectLabels[image.project] || { title: image.project, label: '' };
+  const info = projectLabels[image.project] || { title: image.project };
   projectLightboxImage.src = `${image.local}?v=${image.bytes}`;
   projectLightboxImage.alt = `${info.title} — imagen ${image.projectIndex + 1}`;
   projectLightboxTitle.textContent = `${info.title} — imagen ${image.projectIndex + 1}`;
