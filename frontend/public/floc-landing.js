@@ -87,7 +87,9 @@ if (heroVideo && videoToggleButtons.length) {
     heroVideo.setAttribute('controls', '');
     try {
       await heroVideo.play();
-    } catch (_) {}
+    } catch (error) {
+      videoActivated = !heroVideo.paused;
+    }
     syncVideoToggleState();
   }
 
@@ -196,7 +198,10 @@ if (testimonialAudio && testimonialAudioButton) {
         await testimonialAudioContext.resume();
       }
       await testimonialAudio.play();
-    } catch (_) {}
+    } catch (error) {
+      syncTestimonialAudioState();
+      return;
+    }
     cancelAnimationFrame(testimonialWaveFrame);
     drawTestimonialWave();
     syncTestimonialAudioState();
