@@ -1,3 +1,20 @@
+const FOCUSABLE_SELECTOR = 'button, iframe, [href], [tabindex]:not([tabindex="-1"])';
+
+function trapFocus(event, container) {
+  if (event.key !== 'Tab' || !container) return;
+  const focusable = container.querySelectorAll(FOCUSABLE_SELECTOR);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
 /* ── Cursor ──────────────────────────── */
 const dot  = document.getElementById('c-dot');
 const ring = document.getElementById('c-ring');
@@ -387,34 +404,10 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeProjectLightbox();
     if (e.key === 'ArrowLeft') renderProjectImage(activeProjectIndex - 1);
     if (e.key === 'ArrowRight') renderProjectImage(activeProjectIndex + 1);
-    if (e.key === 'Tab') {
-      const focusableProject = projectLightbox.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
-      if (!focusableProject.length) return;
-      const firstProject = focusableProject[0];
-      const lastProject = focusableProject[focusableProject.length - 1];
-      if (e.shiftKey && document.activeElement === firstProject) {
-        e.preventDefault();
-        lastProject.focus();
-      } else if (!e.shiftKey && document.activeElement === lastProject) {
-        e.preventDefault();
-        firstProject.focus();
-      }
-    }
+    trapFocus(e, projectLightbox);
     return;
   }
   if (e.key === 'Escape' && bookingModal?.classList.contains('open')) closeBookingModal();
-  if (e.key !== 'Tab' || !bookingModal?.classList.contains('open') || !bookingDialog) return;
-
-  const focusable = bookingDialog.querySelectorAll('button, iframe, [href], [tabindex]:not([tabindex="-1"])');
-  if (!focusable.length) return;
-
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  if (e.shiftKey && document.activeElement === first) {
-    e.preventDefault();
-    last.focus();
-  } else if (!e.shiftKey && document.activeElement === last) {
-    e.preventDefault();
-    first.focus();
-  }
+  if (!bookingModal?.classList.contains('open')) return;
+  trapFocus(e, bookingDialog);
 });
