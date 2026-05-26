@@ -356,49 +356,6 @@
       display: block;
       pointer-events: auto;
     }
-    .floating-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      min-height: 58px;
-      padding: 16px 20px;
-      background: var(--rgb-green);
-      border: 0;
-      color: var(--bg);
-      font-family: var(--fm);
-      font-size: 13px;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: .12em;
-      text-align: left;
-      text-decoration: none;
-      text-transform: uppercase;
-      box-shadow: 0 14px 40px rgba(0,0,0,.42), inset 0 0 0 1px rgba(255,255,255,.18);
-      transition: background .2s, border-color .2s, color .2s, transform .2s, box-shadow .2s;
-    }
-    .floating-cta::after {
-      content: '→';
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      border: 1px solid rgba(0,0,0,.3);
-      border-radius: 50%;
-      font-family: var(--fb);
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1;
-    }
-    .floating-cta:hover,
-    .floating-cta:focus-visible {
-      background: var(--rgb-blue);
-      color: var(--bg);
-      transform: translateY(-1px);
-      box-shadow: 0 18px 48px rgba(0,0,0,.52), 0 0 0 1px rgba(58,122,255,.35);
-    }
     .video-scanlines {
       position: absolute; inset: 0; pointer-events: none; z-index: 2;
       background: repeating-linear-gradient(
@@ -480,6 +437,7 @@
       color: rgba(255,255,255,.58);
     }
     #system .system-copy .section-cta { margin-top: 24px; }
+    .hero-actions { margin-top: 24px; }
 
     /* ════════════════════════════════════════════
        DIAGNOSIS
@@ -1025,8 +983,6 @@
     ════════════════════════════════════════════ */
     @media (max-width: 1023px) {
       :root {
-        --floating-rail-pad-x: 24px;
-        --floating-rail-gap: 10px;
         --floating-video-width: clamp(104px, 18vw, 148px);
         --btn-font-size: 12px;
         --btn-pad-y: 16px;
@@ -1064,27 +1020,15 @@
         margin: 0;
         z-index: 500;
         pointer-events: auto;
-        flex-direction: row-reverse;
-        align-items: flex-end;
-        gap: var(--floating-rail-gap);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
       }
       .video-wrap {
         width: var(--floating-video-width);
         max-width: none;
         border-radius: 18px;
         box-shadow: 0 16px 48px rgba(0,0,0,.48);
-      }
-      .floating-cta {
-        width: calc(100vw - var(--floating-rail-pad-x) - 24px - var(--floating-video-width) - var(--floating-rail-gap));
-        min-height: 54px;
-        padding: 14px 16px;
-        font-size: 12px;
-        letter-spacing: .1em;
-      }
-      .floating-cta::after {
-        width: 24px;
-        height: 24px;
-        font-size: 16px;
       }
       .video-meta { display: none; }
       body.modal-open .hero-right {
@@ -1135,8 +1079,6 @@
     }
     @media (max-width: 767px) {
       :root {
-        --floating-rail-pad-x: 24px;
-        --floating-rail-gap: 10px;
         --floating-video-width: clamp(108px, 33vw, 144px);
         --mobile-h1-size: clamp(32px, 8.8vw, 44px);
         --mobile-h1-leading: .96;
@@ -1226,11 +1168,9 @@
         right: 18px;
         bottom: 18px;
       }
-      .floating-cta { width: calc(100vw - var(--floating-rail-pad-x) - 18px - var(--floating-video-width) - var(--floating-rail-gap)); }
     }
     @media (max-width: 479px) {
       :root {
-        --floating-rail-pad-x: 24px;
         --floating-video-width: clamp(102px, 32vw, 124px);
         --mobile-h1-size: clamp(31px, 8.6vw, 36px);
         --mobile-h2-size: clamp(27px, 7.6vw, 34px);
@@ -1262,18 +1202,6 @@
       .video-play-button { width: 42px; height: 42px; }
       .btn-main { width: 100%; text-align: center; padding-left: 20px; padding-right: 20px; }
       .hero-right { bottom: 8px; }
-      .floating-cta {
-        width: calc(100vw - var(--floating-rail-pad-x) - 18px - var(--floating-video-width) - var(--floating-rail-gap));
-        min-height: 52px;
-        padding: 12px 14px;
-        font-size: 11px;
-        letter-spacing: .08em;
-      }
-      .floating-cta::after {
-        width: 22px;
-        height: 22px;
-        font-size: 15px;
-      }
       .cta-promise { font-size: clamp(15px, 5vw, 18px); }
       .fc { padding: 28px 24px; }
       .diag-card { padding-top: 28px; padding-bottom: 28px; }
@@ -1361,7 +1289,7 @@
       .hero-tag,
       .hero-h1,
       .hero-sub,
-      .floating-cta {
+      .hero-actions {
         opacity: 1;
         transform: none;
       }
@@ -1533,6 +1461,7 @@
           <span class="label"><span class="count">1</span> reserva disponible en <span class="date"><span data-campaign-month>Mayo</span> <span data-campaign-year>2026</span></span></span>
         </span>
       </li>
+      <li><a href="#cta" class="nav-cta">Agenda ya</a></li>
     </ul>
   </nav>
 
@@ -1566,6 +1495,10 @@
         </p>
       </div>
 
+      <div class="section-cta hero-actions">
+        <a href="#cta" class="btn-main">Agenda una llamada</a>
+      </div>
+
     </div>
 
     <!-- RIGHT: Video -->
@@ -1578,7 +1511,6 @@
           <div class="video-scanlines"></div>
         </div>
       </div>
-      <a href="#cta" class="floating-cta">Agenda una llamada</a>
     </div>
 
   </section>
@@ -1589,6 +1521,11 @@
       <h2>Tienes la idea. Tienes el equipo. Es el momento.</h2>
       <p>Necesitas que el mercado lo sepa antes de que la oportunidad pase.</p>
       <p><span class="stack-line">Cada vez que explicas qué haces, la historia cambia un poco. El deck cuenta una versión.</span><span class="stack-line">La web, otra. El pitch, otra. Y quien te escucha lo nota aunque no lo diga.</span></p>
+    </div>
+
+    <div class="section-cta reveal d1">
+      <a href="#cta" class="btn-main">Agenda llamada</a>
+      <span class="section-cta-note">Si hay encaje, lo decimos en 24h.</span>
     </div>
 
     <div class="diag-break reveal d2">
@@ -1652,6 +1589,11 @@
       </div>
     </div>
 
+    <div class="section-cta reveal d3">
+      <a href="#cta" class="btn-main">Ver disponibilidad</a>
+      <span class="section-cta-note">Queda una plaza. Si no hay encaje, lo decimos claro.</span>
+    </div>
+
   </section>
 
   <!-- ════ SYSTEM ════════════════════════════════ -->
@@ -1667,6 +1609,10 @@
         </h2>
         <p>Ocho semanas. Sistema completo de marca, narrativa y lanzamiento.</p>
         <p>Para que la próxima vez que alguien importante te pregunte qué haces, <strong style="color:var(--white)">ya lo sepan antes de preguntar.</strong></p>
+        <div class="section-cta reveal d3">
+          <a href="#cta" class="btn-main">Disponibilidad</a>
+          <span class="section-cta-note">QUEDA 1 PLAZA</span>
+        </div>
       </div>
 
       <div class="pillars reveal d2">
@@ -1762,6 +1708,13 @@
     <p class="cta-promise reveal d1">
       <span class="stack-line"><strong>Si tienes una gran historia que contar, el mercado tiene que saberlo.</strong></span>
     </p>
+
+    <div class="reveal d2">
+      <div class="section-cta">
+        <a href="#cta" class="btn-main">Llamada directa →</a>
+        <span class="section-cta-note">Si hay encaje, arrancamos.</span>
+      </div>
+    </div>
 
   </section>
 
