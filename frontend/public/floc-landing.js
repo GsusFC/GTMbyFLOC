@@ -341,15 +341,16 @@ function closeProjectLightbox() {
   }
 }
 
-setupProjectSlider();
-document.querySelectorAll('[data-project-scroll]').forEach(button => {
-  button.addEventListener('click', () => {
-    if (!projectsSlider) return;
-    const direction = Number(button.dataset.projectScroll);
-    projectsSlider.scrollBy({ left: direction * projectsSlider.clientWidth * 0.82, behavior: 'smooth' });
+function initProjectGallery() {
+  setupProjectSlider();
+  document.querySelectorAll('[data-project-scroll]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!projectsSlider) return;
+      const direction = Number(button.dataset.projectScroll);
+      projectsSlider.scrollBy({ left: direction * projectsSlider.clientWidth * 0.82, behavior: 'smooth' });
+    });
   });
-});
-if (projectLightbox) {
+  if (!projectLightbox) return;
   projectLightbox.querySelector('[data-project-close]')?.addEventListener('click', closeProjectLightbox);
   projectLightbox.querySelector('[data-project-prev]')?.addEventListener('click', () => renderProjectImage(activeProjectIndex - 1));
   projectLightbox.querySelector('[data-project-next]')?.addEventListener('click', () => renderProjectImage(activeProjectIndex + 1));
@@ -387,27 +388,36 @@ function closeBookingModal() {
   }
 }
 
-document.querySelectorAll('a[href="#cta"]').forEach(el => {
-  el.addEventListener('click', e => {
-    e.preventDefault();
-    openBookingModal();
+function initBookingModal() {
+  document.querySelectorAll('a[href="#cta"]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      openBookingModal();
+    });
   });
-});
-document.querySelectorAll('[data-close-modal]').forEach(el => {
-  el.addEventListener('click', closeBookingModal);
-});
-bookingModal?.addEventListener('click', e => {
-  if (e.target === bookingModal) closeBookingModal();
-});
-document.addEventListener('keydown', e => {
-  if (projectLightbox?.classList.contains('open')) {
-    if (e.key === 'Escape') closeProjectLightbox();
-    if (e.key === 'ArrowLeft') renderProjectImage(activeProjectIndex - 1);
-    if (e.key === 'ArrowRight') renderProjectImage(activeProjectIndex + 1);
-    trapFocus(e, projectLightbox);
-    return;
-  }
-  if (e.key === 'Escape' && bookingModal?.classList.contains('open')) closeBookingModal();
-  if (!bookingModal?.classList.contains('open')) return;
-  trapFocus(e, bookingDialog);
-});
+  document.querySelectorAll('[data-close-modal]').forEach(el => {
+    el.addEventListener('click', closeBookingModal);
+  });
+  bookingModal?.addEventListener('click', e => {
+    if (e.target === bookingModal) closeBookingModal();
+  });
+}
+
+function initKeyboardShortcuts() {
+  document.addEventListener('keydown', e => {
+    if (projectLightbox?.classList.contains('open')) {
+      if (e.key === 'Escape') closeProjectLightbox();
+      if (e.key === 'ArrowLeft') renderProjectImage(activeProjectIndex - 1);
+      if (e.key === 'ArrowRight') renderProjectImage(activeProjectIndex + 1);
+      trapFocus(e, projectLightbox);
+      return;
+    }
+    if (e.key === 'Escape' && bookingModal?.classList.contains('open')) closeBookingModal();
+    if (!bookingModal?.classList.contains('open')) return;
+    trapFocus(e, bookingDialog);
+  });
+}
+
+initProjectGallery();
+initBookingModal();
+initKeyboardShortcuts();

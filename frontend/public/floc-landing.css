@@ -639,8 +639,6 @@ button:focus-visible {
 .project-image-card {
   min-width: 0;
   scroll-snap-align: start;
-}
-.project-image-card {
   width: 100%;
   border: 1px solid var(--border);
   background: var(--bg-panel);
@@ -967,6 +965,67 @@ footer { border-top: 1px solid var(--border); background: var(--bg-section); }
 .foot-links a:hover { color: var(--dim); }
 
 /* ════════════════════════════════════════════
+   BOOKING MODAL
+════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: var(--z-modal);
+  background: var(--overlay-booking);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  padding: 32px 16px;
+  opacity: 0; transition: opacity var(--motion-medium) var(--ease);
+}
+.modal-overlay.open { display: flex; opacity: 1; }
+.modal-dialog {
+  position: relative;
+  width: 100%; max-width: 1180px;
+  max-height: calc(100vh - 64px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px var(--modal-shadow);
+  display: flex; flex-direction: column;
+  transform: translateY(16px); opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease), transform var(--motion-slow) var(--ease);
+  overflow: hidden;
+}
+.modal-overlay.open .modal-dialog { transform: translateY(0); opacity: 1; }
+.modal-close {
+  position: absolute; top: 16px; right: 16px; z-index: var(--z-local-overlay);
+  background: var(--overlay-control-strong); border: 1px solid var(--border);
+  width: 32px; height: 32px;
+  color: var(--white); font-family: var(--fm); font-size: 14px;
+  transition: background var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.modal-close:hover {
+  background: var(--accent); border-color: var(--accent); color: var(--bg);
+}
+.modal-body {
+  flex: 1; overflow: auto;
+  background: var(--surface);
+}
+.modal-body iframe {
+  display: block; width: 100%;
+  min-height: min(820px, calc(100vh - 80px));
+  border: none;
+  background: var(--surface);
+}
+.booking-iframe { overflow: hidden; }
+body.modal-open { overflow: hidden; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ════════════════════════════════════════════
    ANIMATIONS
 ════════════════════════════════════════════ */
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
@@ -1203,66 +1262,6 @@ footer { border-top: 1px solid var(--border); background: var(--bg-section); }
   .foot-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
 
-/* ════════════════════════════════════════════
-   BOOKING MODAL
-════════════════════════════════════════════ */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: var(--z-modal);
-  background: var(--overlay-booking);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: none; align-items: center; justify-content: center;
-  padding: 32px 16px;
-  opacity: 0; transition: opacity var(--motion-medium) var(--ease);
-}
-.modal-overlay.open { display: flex; opacity: 1; }
-.modal-dialog {
-  position: relative;
-  width: 100%; max-width: 1180px;
-  max-height: calc(100vh - 64px);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 30px 80px var(--modal-shadow);
-  display: flex; flex-direction: column;
-  transform: translateY(16px); opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease), transform var(--motion-slow) var(--ease);
-  overflow: hidden;
-}
-.modal-overlay.open .modal-dialog { transform: translateY(0); opacity: 1; }
-.modal-close {
-  position: absolute; top: 16px; right: 16px; z-index: var(--z-local-overlay);
-  background: var(--overlay-control-strong); border: 1px solid var(--border);
-  width: 32px; height: 32px;
-  color: var(--white); font-family: var(--fm); font-size: 14px;
-  transition: background var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast);
-  display: inline-flex; align-items: center; justify-content: center;
-}
-.modal-close:hover {
-  background: var(--accent); border-color: var(--accent); color: var(--bg);
-}
-.modal-body {
-  flex: 1; overflow: auto;
-  background: var(--surface);
-}
-.modal-body iframe {
-  display: block; width: 100%;
-  min-height: min(820px, calc(100vh - 80px));
-  border: none;
-  background: var(--surface);
-}
-.booking-iframe { overflow: hidden; }
-body.modal-open { overflow: hidden; }
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 @media (max-width: 767px) {
   .modal-overlay { padding: 12px; }
   .modal-body iframe { min-height: calc(100vh - 32px); }
