@@ -222,7 +222,12 @@ function pauseLandingMedia() {
 
 /* ── Campaign availability date ─ */
 (function () {
-  const campaignDate = { month: 'Mayo', year: '2026' };
+  const now = new Date();
+  const month = now.toLocaleDateString('es-ES', { month: 'long' });
+  const campaignDate = {
+    month: month.charAt(0).toUpperCase() + month.slice(1),
+    year: String(now.getFullYear())
+  };
   document.querySelectorAll('[data-campaign-month]').forEach(el => { el.textContent = campaignDate.month; });
   document.querySelectorAll('[data-campaign-year]').forEach(el => { el.textContent = campaignDate.year; });
 })();
@@ -394,50 +399,15 @@ function initProjectGallery() {
   });
 }
 
-/* ── Booking modal ──────────────────── */
-const bookingModal = document.getElementById('bookingModal');
-const bookingDialog = bookingModal?.querySelector('.modal-dialog');
-const bookingClose = bookingModal?.querySelector('[data-close-modal]');
-const bookingIframe = document.getElementById('EFOOmskKFRG1z1pU66VF_1779557718745');
-const BOOKING_SRC = 'https://api.leadconnectorhq.com/widget/booking/EFOOmskKFRG1z1pU66VF';
-let lastFocusedBeforeBooking = null;
-
-function openBookingModal() {
-  if (!bookingModal || !bookingClose) return;
-  if (bookingIframe && !bookingIframe.getAttribute('src')) {
-    bookingIframe.setAttribute('src', BOOKING_SRC);
-  }
-  lastFocusedBeforeBooking = document.activeElement;
-  pauseLandingMedia();
-  bookingModal.classList.add('open');
-  bookingModal.setAttribute('aria-hidden', 'false');
-  bookingModal.removeAttribute('inert');
-  document.body.classList.add('modal-open');
-  setTimeout(() => bookingClose.focus(), 0);
-}
-function closeBookingModal() {
-  if (!bookingModal) return;
-  bookingModal.classList.remove('open');
-  bookingModal.setAttribute('aria-hidden', 'true');
-  bookingModal.setAttribute('inert', '');
-  document.body.classList.remove('modal-open');
-  if (lastFocusedBeforeBooking && typeof lastFocusedBeforeBooking.focus === 'function') {
-    lastFocusedBeforeBooking.focus();
-  }
-}
-
-function initBookingModal() {
+/* ── CTA smooth scroll ──────────────── */
+function initCtaScroll() {
+  const target = document.getElementById('cta');
+  if (!target) return;
   document.querySelectorAll('a[href="#cta"]').forEach(el => {
     el.addEventListener('click', e => {
       e.preventDefault();
-      openBookingModal();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-  });
-  document.querySelectorAll('[data-close-modal]').forEach(el => {
-    el.addEventListener('click', closeBookingModal);
-  });
-  bookingModal?.addEventListener('click', e => {
-    if (e.target === bookingModal) closeBookingModal();
   });
 }
 
@@ -450,12 +420,9 @@ function initKeyboardShortcuts() {
       trapFocus(e, projectLightbox);
       return;
     }
-    if (e.key === 'Escape' && bookingModal?.classList.contains('open')) closeBookingModal();
-    if (!bookingModal?.classList.contains('open')) return;
-    trapFocus(e, bookingDialog);
   });
 }
 
 initProjectGallery();
-initBookingModal();
+initCtaScroll();
 initKeyboardShortcuts();

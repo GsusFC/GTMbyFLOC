@@ -58,12 +58,10 @@
   --video-shadow-deep: rgba(0,0,0,.5);
   --scanline-color: rgba(0,0,0,.15);
   --overlay-project: rgba(0,0,0,.56);
-  --overlay-booking: rgba(0,0,0,.78);
   --overlay-control: rgba(0,0,0,.52);
   --overlay-control-strong: rgba(0,0,0,.55);
   --stage-bg: rgba(0,0,0,.28);
   --stage-shadow: rgba(0,0,0,.38);
-  --modal-shadow: rgba(0,0,0,.6);
   --quote-rule: rgba(255,255,255,.82);
   --wave-red: rgba(255,45,85,.75);
   --wave-green: rgba(25,255,118,.7);
@@ -84,7 +82,6 @@
   --z-video: 500;
   --z-nav: 600;
   --z-grain: 800;
-  --z-modal: 1000;
   --z-lightbox: 1200;
   --z-cursor-ring: 9998;
   --z-cursor-dot: 9999;
@@ -333,7 +330,6 @@ button:focus-visible {
   animation: fadeUp .7s .95s var(--ease) forwards;
 }
 .hero-video-prompt-text {
-  max-width: 430px;
   font-size: var(--type-body-sm-size);
   line-height: var(--type-body-sm-leading);
   color: var(--dim);
@@ -950,6 +946,13 @@ body.project-open .hero-right {
 }
 .cta-promise s { text-decoration-color: var(--off); }
 .cta-promise strong { color: var(--white); font-weight: 500; }
+.cta-survey {
+  width: 100%; max-width: 760px; margin-top: 8px;
+}
+.cta-survey iframe {
+  display: block; width: 100%; min-height: 640px;
+  border: none; background: transparent;
+}
 /* ════════════════════════════════════════════
    FOOTER — exact structure of wearefloc.com
 ════════════════════════════════════════════ */
@@ -959,18 +962,20 @@ footer { border-top: 1px solid var(--border); background: var(--bg-section); }
   display: flex; justify-content: space-between; align-items: center;
   gap: 32px;
 }
-.foot-brand { display: flex; flex-direction: column; gap: 6px; }
+.foot-brand { display: flex; flex-direction: row; align-items: center; gap: 6px; }
 .foot-logo {
   font-family: var(--fd); font-weight: 800;
   font-size: var(--footer-logo-size); letter-spacing: .06em; text-transform: uppercase;
+  line-height: 0;
 }
+.foot-logo svg { display: block; height: 40px; width: auto; color: var(--white); }
 .foot-logo .star { color: var(--accent); }
 .foot-tagline {
   font-family: var(--fd); font-size: var(--footer-tag-size); font-weight: 800;
   text-transform: uppercase; line-height: 1; color: var(--white);
 }
-.foot-tagline span { font-family: var(--fb); font-weight: 400; font-size: 14px;
-                     text-transform: lowercase; letter-spacing: .02em; }
+.foot-tagline span { font-family: var(--fd); font-weight: 800; font-size: 21px;
+                     text-transform: uppercase; letter-spacing: .02em; }
 .foot-socials { display: flex; flex-direction: row; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: flex-end; }
 .foot-socials a {
   font-family: var(--fb); font-size: 13px; letter-spacing: 0;
@@ -992,55 +997,6 @@ footer { border-top: 1px solid var(--border); background: var(--bg-section); }
 }
 .foot-links a:hover { color: var(--dim); }
 
-/* ════════════════════════════════════════════
-   BOOKING MODAL
-════════════════════════════════════════════ */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: var(--z-modal);
-  background: var(--overlay-booking);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: none; align-items: center; justify-content: center;
-  padding: 32px 16px;
-  opacity: 0; transition: opacity var(--motion-medium) var(--ease);
-}
-.modal-overlay.open { display: flex; opacity: 1; }
-.modal-dialog {
-  position: relative;
-  width: 100%; max-width: 1180px;
-  max-height: calc(100vh - 64px);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 30px 80px var(--modal-shadow);
-  display: flex; flex-direction: column;
-  transform: translateY(16px); opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease), transform var(--motion-slow) var(--ease);
-  overflow: hidden;
-}
-.modal-overlay.open .modal-dialog { transform: translateY(0); opacity: 1; }
-.modal-close {
-  position: absolute; top: 16px; right: 16px; z-index: var(--z-local-overlay);
-  background: var(--overlay-control-strong); border: 1px solid var(--border);
-  width: 32px; height: 32px;
-  color: var(--white); font-family: var(--fm); font-size: 14px;
-  transition: background var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast);
-  display: inline-flex; align-items: center; justify-content: center;
-}
-.modal-close:hover {
-  background: var(--accent); border-color: var(--accent); color: var(--bg);
-}
-.modal-body {
-  flex: 1; overflow: auto;
-  background: var(--surface);
-}
-.modal-body iframe {
-  display: block; width: 100%;
-  min-height: min(820px, calc(100vh - 80px));
-  border: none;
-  background: var(--surface);
-}
-.booking-iframe { overflow: hidden; }
-body.modal-open { overflow: hidden; }
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1133,10 +1089,6 @@ body.modal-open { overflow: hidden; }
     border-radius: 18px;
     box-shadow: 0 16px 48px var(--video-shadow-deep);
   }
-  body.modal-open .mobile-video-dock {
-    opacity: 0;
-    pointer-events: none;
-  }
   .hero-left > .section-cta { display: none; }
   .mobile-video-cta {
     display: inline-flex;
@@ -1186,6 +1138,9 @@ body.modal-open { overflow: hidden; }
   html { scroll-snap-type: y proximity; }
   body > section {
     scroll-snap-align: start;
+  }
+  body > footer {
+    scroll-snap-align: end;
   }
   .sec {
     min-height: 100svh;
@@ -1337,10 +1292,6 @@ body.modal-open { overflow: hidden; }
   .foot-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
 
-@media (max-width: 767px) {
-  .modal-overlay { padding: 12px; }
-  .modal-body iframe { min-height: calc(100vh - 32px); }
-}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

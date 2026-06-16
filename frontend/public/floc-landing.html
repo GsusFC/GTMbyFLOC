@@ -12,7 +12,7 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./Druk-Wide-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="./Geist-wght.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="./floc-landing.css?v=mobile-video-dock-20260527">
+  <link rel="stylesheet" href="./floc-landing.css?v=footer-brand-row-20260615">
 </head>
 <body>
 
@@ -47,10 +47,10 @@
             <span class="slot on"></span>
             <span class="slot"></span>
           </span>
-          <span class="label"><span class="count">1</span> reserva disponible en <span class="date"><span data-campaign-month>Mayo</span> <span data-campaign-year>2026</span></span></span>
+          <span class="label"><span class="count">1</span> plaza disponible en <span class="date"><span data-campaign-month>Mayo</span> <span data-campaign-year>2026</span></span></span>
         </span>
       </li>
-      <li><a href="#cta" class="nav-cta">Agenda ya</a></li>
+      <li><a href="#cta" class="nav-cta">Agendar reunión</a></li>
     </ul>
   </nav>
 
@@ -80,12 +80,12 @@
       <div class="hero-video-prompt">
         <button class="video-play-button" type="button" data-video-toggle aria-label="Reproducir video"><span class="button-icon" aria-hidden="true"></span></button>
         <p class="hero-video-prompt-text">
-          Dale al play: en el video te explicamos todo.
+          <strong>PASO 1: Pulsa el Play, te lo explicamos en menos de 2min</strong>
         </p>
       </div>
 
       <div class="section-cta hero-actions">
-        <a href="#cta" class="btn-main">Agenda una llamada</a>
+        <a href="#cta" class="btn-main">Agendar llamada</a>
       </div>
 
     </div>
@@ -100,7 +100,7 @@
           <div class="video-scanlines"></div>
         </div>
       </div>
-      <a href="#cta" class="btn-main mobile-video-cta">Agenda una llamada</a>
+      <a href="#cta" class="btn-main mobile-video-cta">Agendar llamada</a>
     </div>
 
   </section>
@@ -113,8 +113,8 @@
     </div>
 
     <div class="section-cta reveal d1">
-      <a href="#cta" class="btn-main">Agenda llamada</a>
-      <span class="section-cta-note">Si hay encaje, lo decimos en 24h.</span>
+      <a href="#cta" class="btn-main">Ten una reunión</a>
+      <span class="section-cta-note">Si encajas, agendamos en 24h</span>
     </div>
 
     <div class="diag-break reveal d2">
@@ -178,11 +178,6 @@
       </div>
     </div>
 
-    <div class="section-cta reveal d3">
-      <a href="#cta" class="btn-main">Ver disponibilidad</a>
-      <span class="section-cta-note">Queda una plaza. Si no hay encaje, lo decimos claro.</span>
-    </div>
-
   </section>
 
   <!-- ════ SYSTEM ════════════════════════════════ -->
@@ -199,8 +194,7 @@
         <p>Ocho semanas. Sistema completo de marca, narrativa y lanzamiento.</p>
         <p>Para que la próxima vez que alguien importante te pregunte qué haces, <strong class="system-emphasis">ya lo sepan antes de preguntar.</strong></p>
         <div class="section-cta reveal d3">
-          <a href="#cta" class="btn-main">Disponibilidad</a>
-          <span class="section-cta-note">QUEDA 1 PLAZA</span>
+          <a href="#cta" class="btn-main">Reserva tu plaza</a>
         </div>
       </div>
 
@@ -253,12 +247,12 @@
 
     <div class="testimonial-grid">
       <div class="testimonial-media reveal">
-        <img class="testimonial-photo" src="./testimonial-gonzalo.jpg" alt="Gonzalo, fundador y CEO de Charms" loading="lazy" decoding="async" width="400" height="400">
+        <img class="testimonial-photo" src="./testimonial-gonzalo.jpg" alt="Gon Recio, fundador y CEO de Charms" loading="lazy" decoding="async" width="400" height="400">
         <div>
-          <div class="testimonial-person">Gonzalo</div>
+          <div class="testimonial-person">Gon Recio</div>
           <div class="testimonial-role">CEO de Charms</div>
         </div>
-        <button class="testimonial-audio" type="button" data-testimonial-audio-toggle aria-label="Escuchar audio de Gonzalo">
+        <button class="testimonial-audio" type="button" data-testimonial-audio-toggle aria-label="Escuchar audio de Gon Recio">
           <span class="button-icon" aria-hidden="true"></span>
           <span class="testimonial-audio-text">Escúchalo hablar de nosotros.</span>
           <svg class="testimonial-audio-wave" viewBox="0 0 228 44" preserveAspectRatio="none" aria-hidden="true">
@@ -286,7 +280,7 @@
 
   <!-- ════ CTA ═══════════════════════════════════ -->
   <section id="cta" class="sec">
-    <div class="section-kicker section-kicker-line">Next step</div>
+    <div class="section-kicker section-kicker-line">Da el paso</div>
 
     <h2 class="cta-h reveal">
       <span class="stack-line">¿ESTÁS LISTO</span>
@@ -298,11 +292,8 @@
       <span class="stack-line"><strong>Si tienes una gran historia que contar, el mercado tiene que saberlo.</strong></span>
     </p>
 
-    <div class="reveal d2">
-      <div class="section-cta">
-        <a href="#cta" class="btn-main">Llamada directa →</a>
-        <span class="section-cta-note">Si hay encaje, arrancamos.</span>
-      </div>
+    <div class="cta-survey reveal d2" id="survey">
+      <iframe src="https://api.leadconnectorhq.com/widget/survey/SDghF3sEkmC8yqjgLcCC" style="border:none;width:100%;" scrolling="no" id="SDghF3sEkmC8yqjgLcCC" title="survey"></iframe>
     </div>
 
   </section>
@@ -311,7 +302,15 @@
   <footer>
     <div class="foot-main">
       <div class="foot-brand">
-        <div class="foot-logo">FLOC<span class="star">*</span></div>
+        <div class="foot-logo" aria-label="FLOC*">
+          <svg viewBox="0 0 476 453" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M65.71 125L0 172.75L25.1 250H237.76L65.71 125Z" fill="currentColor"/>
+            <path d="M65.71 375L90.81 452.25H172.04L237.76 250L65.71 375Z" fill="currentColor"/>
+            <path d="M237.76 250L303.48 452.25H384.71L409.81 375L237.76 250Z" fill="currentColor"/>
+            <path d="M409.81 125L237.76 250H450.42L475.52 172.75L409.81 125Z" fill="currentColor"/>
+            <path d="M237.76 0L172.04 47.75L237.76 250L303.48 47.75L237.76 0Z" fill="currentColor"/>
+          </svg>
+        </div>
         <div class="foot-tagline">
           <span class="stack-line">NEVER WORKING</span>
           <span class="stack-line">always playing</span>
@@ -326,7 +325,7 @@
     </div>
 
     <div class="foot-bottom">
-      <span class="foot-copy">© 2018–2026 We Are FLOC, S.L. — Hecho en Alicante</span>
+      <span class="foot-copy">© 2018–2026 We Are FLOC, S.L.</span>
       <ul class="foot-links">
         <li><a href="https://wearefloc.com/privacy-policy">Privacidad</a></li>
         <li><a href="#projects">Proyectos</a></li>
@@ -347,22 +346,6 @@
     </div>
   </div>
 
-  <!-- ════ BOOKING MODAL ══════════════════════ -->
-  <div id="bookingModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" aria-hidden="true" inert>
-    <div class="modal-dialog" tabindex="-1">
-      <h2 id="bookingModalTitle" class="sr-only">Agenda una llamada con FLOC*</h2>
-      <button type="button" class="modal-close" data-close-modal aria-label="Cerrar">×</button>
-
-      <div class="modal-body">
-        <iframe
-          data-src="https://api.leadconnectorhq.com/widget/booking/EFOOmskKFRG1z1pU66VF"
-          class="booking-iframe"
-          scrolling="no"
-          id="EFOOmskKFRG1z1pU66VF_1779557718745"
-          title="Agenda una llamada"></iframe>
-      </div>
-    </div>
-  </div>
   <script defer src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 
   <script defer src="./floc-landing.js"></script>
