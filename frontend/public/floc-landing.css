@@ -1077,6 +1077,11 @@ footer { border-top: 1px solid var(--border); background: var(--bg-section); }
     grid-template-rows: var(--video-dock-height);
     align-items: end;
     gap: var(--video-dock-gap);
+    transition: opacity var(--motion-medium) var(--ease);
+  }
+  .mobile-video-dock.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
   .mobile-video-dock .video-wrap {
     grid-column: 2;

@@ -426,3 +426,13 @@ function initKeyboardShortcuts() {
 initProjectGallery();
 initCtaScroll();
 initKeyboardShortcuts();
+
+/* ── Hide mobile video dock while the survey is on screen ── */
+(function () {
+  const dock = document.querySelector('.mobile-video-dock');
+  const survey = document.getElementById('survey');
+  if (!dock || !survey || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(entries => {
+    dock.classList.toggle('is-hidden', entries[0].isIntersecting);
+  }).observe(survey);
+})();
